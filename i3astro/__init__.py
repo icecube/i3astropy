@@ -1,3 +1,7 @@
+"""
+An interface between astropy and IceCube's local coordinate system.
+"""
+
 __all__ = ["I3Time", "I3Dir", "i3location"]
 __version__ = "0.1"
 
