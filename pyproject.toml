@@ -7,7 +7,7 @@ module = "i3astro"
 author = "Kevin Meagher"
 author-email = "kmeagher@icecube.wisc.edu"
 home-page = "https://github.com/icecube/i3astro"
-requires = ["astropy"]
+requires = ["astropy","erfa"]
 classifiers = [
     'Development Status :: 4 - Beta',
     'Intended Audience :: Science/Research',
