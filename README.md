@@ -14,13 +14,13 @@ For more information on astropy coordinate transform see the [astropy docs](http
 
 ## Installation
 
-To install with pip: ::
+To install with pip:
 
     pip install [--user] git+https://github.com/icecube/i3astro.git
 
 If you want to develop i3astro you can install directly with flit.
 The ``-s`` option will symlink the module into site-packages rather than copying it,
-so that you can test changes without reinstalling the module: ::
+so that you can test changes without reinstalling the module:
 
     git clone git@github.com:icecube/i3astro.git
     cd i3astro
