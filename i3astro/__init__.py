@@ -1,5 +1,5 @@
 """
-An interface between astropy and IceCube's local coordinate system.
+Astropy support for IceCube local coordinates.
 """
 
 __all__ = ["I3Time", "I3Dir", "i3location"]
