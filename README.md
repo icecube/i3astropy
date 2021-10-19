@@ -1,4 +1,5 @@
 [![Tests](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml)
+[![codecov](https://codecov.io/gh/icecube/i3astro/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astro)
 
 # i3astro
 
