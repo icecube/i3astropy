@@ -1,3 +1,5 @@
+[![Tests](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml)
+
 # i3astro
 
 Astropy support for IceCube local coordinates.
