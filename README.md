@@ -35,27 +35,31 @@ so that you can test changes without reinstalling the module:
 This example takes an event which occurred at DAQ time (2021, 155525688461058500) and was reconstructed in the direction of zenith = 0.73884 rad, azimuth = 2.7348 rad and converts it to RA and Dec.
 In addition, get the moon position in IceCube coordinates at the same time.
 
-    >>> from astropy.coordinates import ICRS, get_sun
-    >>> from astropy.time import Time
-    >>> from astropy.units import radian
-    >>> from i3astro import I3Dir
+```python
 
-    >>> # Create an astropy time from a daq time
-    >>> t = Time(2021, 155525688461058500, format="i3time")
-    >>> t.iso
-    '2021-06-30 00:09:28.846'
+>>> from astropy.coordinates import ICRS, get_sun
+>>> from astropy.time import Time
+>>> from astropy.units import radian
+>>> from i3astro import I3Dir
 
-    >>> # Convert IceCube coordinates to celestial
-    >>> I3Dir(zen=0.73884 * radian, az=2.7348 * radian, obstime=t).transform_to(ICRS())
-    <ICRS Coordinate: (ra, dec) in deg
-        (213.61898984, -47.55991453)>
+>>> # Create an astropy time from a daq time
+>>> t = Time(2021, 155525688461058500, format="i3time")
+>>> t.iso
+'2021-06-30 00:09:28.846'
 
-    >>> # Convert Crab Nebula to IceCube coordinates
-    >>> ICRS("05h34m31.94", "+22d00m52.2").transform_to(I3Dir(obstime=t))
-    <I3Dir Coordinate (obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
-        (286.7095864, 112.03182914, 1.)>
+>>> # Convert IceCube coordinates to celestial
+>>> I3Dir(zen=0.73884 * radian, az=2.7348 * radian, obstime=t).transform_to(ICRS())
+<ICRS Coordinate: (ra, dec) in deg
+    (213.61898984, -47.55991453)>
 
-    >>> # Get the Moon location in IceCube Coordinates
-    >>> get_sun(t).transform_to(I3Dir())
-    <SkyCoord (I3Dir: obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
-        (271.46065373, 113.17296322, 1.)>
+>>> # Convert Crab Nebula to IceCube coordinates
+>>> ICRS("05h34m31.94", "+22d00m52.2").transform_to(I3Dir(obstime=t))
+<I3Dir Coordinate (obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
+    (286.7095864, 112.03182914, 1.)>
+
+>>> # Get the Moon location in IceCube Coordinates
+>>> get_sun(t).transform_to(I3Dir())
+<SkyCoord (I3Dir: obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
+    (271.46065373, 113.17296322, 1.)>
+
+```
