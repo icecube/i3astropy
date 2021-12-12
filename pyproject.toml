@@ -25,8 +25,8 @@ classifiers = [
 test = ["pytest-cov", "pytest-isort", "pytest-black", "pytest-flake8", "pytest-pylint"]
 
 [tool.pytest.ini_options]
-testpaths = ["i3astro","tests"]
-addopts = "--isort --black --flake8 --pylint --cov=i3astro --pylint-ignore=tests"
+testpaths = ["i3astro", "tests", "README.md"]
+addopts = "--isort --black --flake8 --pylint --cov=i3astro --pylint-ignore=tests --doctest-glob='README.md'"
 flake8-max-line-length = 108
 flake8-ignore = "E203, W503, F401"
 
