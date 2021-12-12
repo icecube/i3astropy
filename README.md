@@ -35,7 +35,7 @@ so that you can test changes without reinstalling the module:
 This example takes an event which occurred at DAQ time (2021, 155525688461058500) and was reconstructed in the direction of zenith = 0.73884 rad, azimuth = 2.7348 rad and converts it to RA and Dec.
 In addition, get the moon position in IceCube coordinates at the same time.
 
-    >>> from astropy.coordinates import ICRS, get_moon
+    >>> from astropy.coordinates import ICRS, get_sun
     >>> from astropy.time import Time
     >>> from astropy.units import radian
     >>> from i3astro import I3Dir
@@ -50,12 +50,12 @@ In addition, get the moon position in IceCube coordinates at the same time.
     <ICRS Coordinate: (ra, dec) in deg
         (213.61898984, -47.55991453)>
 
-    >>> # Convert Crab Neebula to IceCube coordinates
+    >>> # Convert Crab Nebula to IceCube coordinates
     >>> ICRS("05h34m31.94", "+22d00m52.2").transform_to(I3Dir(obstime=t))
     <I3Dir Coordinate (obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
         (286.7095864, 112.03182914, 1.)>
 
     >>> # Get the Moon location in IceCube Coordinates
-    >>> get_moon(t).transform_to(I3Dir())
+    >>> get_sun(t).transform_to(I3Dir())
     <SkyCoord (I3Dir: obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
-        (20.88673758, 80.87271423, 1.)>
+        (271.46065373, 113.17296322, 1.)>
