@@ -33,7 +33,7 @@ so that you can test changes without reinstalling the module:
 ## Tutorial
 
 This example takes an event which occurred at DAQ time (2021, 155525688461058500) and was reconstructed in the direction of zenith = 0.73884 rad, azimuth = 2.7348 rad and converts it to RA and Dec.
-In addition, get the moon position in IceCube coordinates at the same time.
+In addition, get the Sun position in IceCube coordinates at the same time.
 
 ```python
 
@@ -57,9 +57,45 @@ In addition, get the moon position in IceCube coordinates at the same time.
 <I3Dir Coordinate (obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
     (286.7095864, 112.03182914, 1.)>
 
->>> # Get the Moon location in IceCube Coordinates
+>>> # Get the Sun location in IceCube Coordinates
 >>> get_sun(t).transform_to(I3Dir())
 <SkyCoord (I3Dir: obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
     (271.46065373, 113.17296322, 1.)>
 
+```
+
+## Examples
+
+[plot_analemma.py](./examples/plot_analemma.py) creates a diagram of the location of the Sun at noon
+everyday for a year.
+
+![Analemma](./examples/plot_analemma.svg)
+
+[plot_moon.py](./examples/plot_moon.py) plots the zenith of the moon over 252 lunar periods to show the
+variation in altitude from orbit to orbit as the Moon's inclination changes relative ot the equator.
+Also shown is the maximum zenith for each Lunar cycle. 
+
+![Lunar Cycles](./examples/plot_moon1.svg) ![Max Lunar Altitude per Cycle](./examples/plot_moon2.svg)
+
+[plot_sun_azimuth.py](./examples/plot_sun_azimuth.py) plots the IceCube Azimuth of the Sun and First Point
+of Ares on the Vernal Equinox next to a diagram of the IceCube detector with IceCube Azimuth labeled and
+the positions of the sun at certain times. This Demonstrates that i3astropy is correctly orienting the
+IceCube coordinate system.
+
+![Sun Azimuth](./examples/plot_sun_azimuth.svg)
+
+
+[compare_ps_sample.py](examples/compare_ps_sample.py) takes a file from the Neutrino Sources Working
+Group's datasets and calculate the Right Ascension and Declination of the events from the Zenith and
+Azimuth and compare to the coordinates in the data file. It can be seen that i3astropy agrees with previous
+methods to within 0.0002°, the high values for RA and azimuth are caused by events close to the pole. 
+
+```
+Checked 10000 events
+Max diff RA            : 0.012402°
+Max diff dec           : 0.000173°
+Max diff sky separation: 0.000174°
+Max diff zenith        : 0.000173°
+Max diff azimuth       : 0.010999°
+Max diff I3 separation : 0.000174°
 ```
