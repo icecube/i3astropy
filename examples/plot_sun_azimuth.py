@@ -12,7 +12,7 @@ from astropy.time import Time
 from astropy.units import day, deg
 from matplotlib import patches, ticker
 
-from i3astro import I3Dir
+from i3astropy import I3Dir
 
 
 def draw_circ(ax, radius, centX, centY, angle_, theta2_, color_="black"):

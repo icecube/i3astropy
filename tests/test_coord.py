@@ -9,7 +9,7 @@ from astropy.time import Time
 from astropy.units import day, deg, hour
 from numpy.testing import assert_allclose
 
-from i3astro import I3Dir
+from i3astropy import I3Dir
 
 try:
     from icecube import astro
@@ -42,11 +42,11 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(i3ra270.zen.degree, 90, 0)
         self.assertAlmostEqual(i3ra270.az.degree, 180, 0)
 
-        # celistial north pole should be nadir
+        # celestial north pole should be nadir
         i3np = SkyCoord(ra=0 * u.deg, dec=+90 * u.deg, frame="icrs", obstime=t).transform_to(I3Dir())
         self.assertAlmostEqual(i3np.zen.degree, 180, 0)
 
-        # celistial south pole should be zenith
+        # celestial south pole should be zenith
         i3sp = SkyCoord(ra=0 * u.deg, dec=-90 * u.deg, frame="icrs", obstime=t).transform_to(I3Dir())
         self.assertAlmostEqual(i3sp.zen.degree, 0, 0)
 
@@ -105,11 +105,11 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(ge.ra.degree, 180, 0)
         self.assertAlmostEqual(ge.dec.degree, 0, 0)
 
-        # zenith should be celistial south pole
+        # zenith should be celestial south pole
         ge = I3Dir(zen=0 * u.deg, az=0 * u.deg, obstime=t).transform_to(ICRS())
         self.assertAlmostEqual(ge.dec.degree, -90, 0)
 
-        # nadir should be celistial south pole
+        # nadir should be celestial south pole
         ge = I3Dir(zen=180 * u.deg, az=0 * u.deg, obstime=t).transform_to(ICRS())
         self.assertAlmostEqual(ge.dec.degree, +90, 0)
 
@@ -152,7 +152,7 @@ class TestI3AstroPy(unittest.TestCase):
         assert_allclose((sun2.az - ref2.az).wrap_at(180 * deg).degree, 0, atol=0.1)
         assert_allclose(0, sun2.separation(ref2).degree, atol=0.4)
 
-    @unittest.skipIf("astro" not in globals(), "Not in an icetray invironment")
+    @unittest.skipIf("astro" not in globals(), "Not in an icetray environment")
     def test_icetray(self):
 
         t0 = Time("2020-03-20 0:00")

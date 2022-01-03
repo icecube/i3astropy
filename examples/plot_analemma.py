@@ -8,7 +8,7 @@ from astropy.coordinates import get_sun
 from astropy.time import Time
 from astropy.units import day
 
-from i3astro import I3Dir
+from i3astropy import I3Dir
 
 lmargin, rmargin = 0.08, 0.02
 awidth = 0.2

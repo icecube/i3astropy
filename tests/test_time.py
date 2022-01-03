@@ -5,7 +5,7 @@ from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_equal
 
-import i3astro
+import i3astropy
 
 try:
     from icecube.dataclasses import I3Time
@@ -55,7 +55,7 @@ times = [
 
 class TestI3Time(unittest.TestCase):
     """
-    Tests related to I3Time in i3astro
+    Tests related to I3Time in i3astropy
     """
 
     def test_times(self):
@@ -91,7 +91,7 @@ class TestI3Time(unittest.TestCase):
     @unittest.skipIf("I3Time" not in globals(), "Not in an icetray invironment")
     def test_icetray(self):
         """
-        Test i3astro.I3Time matches dataclasses.I3Time
+        Test i3astropy.I3Time matches dataclasses.I3Time
         """
         for daq_year, daq_time, iso in times:
             with self.subTest(daq_year=daq_year, daq_time=daq_time, iso=iso):

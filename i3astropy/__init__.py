@@ -22,7 +22,7 @@ i3location = EarthLocation(lat=-89.9944 * deg, lon=-62.6081 * deg, height=883.9 
 
 class I3Time(TimeFormat):
     """
-    Time format for IceCube's DAQ formt, times are expressed as two integers:
+    Time format for IceCube's DAQ format, times are expressed as two integers:
     The UTC year and the number of tenths of nanoseconds since the start of the UTC Year
     including leapseconds
     """

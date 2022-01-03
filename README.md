@@ -1,7 +1,7 @@
-[![Tests](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astro/actions/workflows/unit_tests.yml)
-[![codecov](https://codecov.io/gh/icecube/i3astro/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astro)
+[![Tests](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml)
+[![codecov](https://codecov.io/gh/icecube/i3astropy/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astropy)
 
-# i3astro
+# i3astropy
 
 Astropy support for IceCube local coordinates.
 
@@ -10,7 +10,7 @@ Because of IceCube's unique location at the Geographic South Pole, it doesn't us
 coordinate system used by astropy and other astronomical software packages.
 Instead IceCube uses a zenith/azimuth where the azimuth is defined with respect to polar grid directions rather than the local meridian.
 IceCube's local coordinate system is described in depth [here](https://docs.icecube.aq/icetray/main/projects/dataclasses/coordinates.html)).
-This python module provides a small extension to astropy with a class called `i3astro.I3Dir`, an instance of
+This python module provides a small extension to astropy with a class called `i3astropy.I3Dir`, an instance of
 `astropy.coordinates.baseframe.BaseCoordinateFrame`, which can be used for all astropy coordinate transforms.
 In addition, a time format is provided to allow IceCube DAQ times to be entered directly.
 For more information on astropy coordinate transform see the [astropy docs](https://docs.astropy.org/en/stable/coordinates/index.html).
@@ -19,14 +19,14 @@ For more information on astropy coordinate transform see the [astropy docs](http
 
 To install with pip:
 
-    pip install [--user] git+https://github.com/icecube/i3astro.git
+    pip install [--user] git+https://github.com/icecube/i3astropy.git
 
-If you want to develop i3astro you can install directly with flit.
+If you want to develop i3astropy you can install directly with flit.
 The ``-s`` option will symlink the module into site-packages rather than copying it,
 so that you can test changes without reinstalling the module:
 
-    git clone git@github.com:icecube/i3astro.git
-    cd i3astro
+    git clone git@github.com:icecube/i3astropy.git
+    cd i3astropy
     flit install [--user] -s
 
 
@@ -40,7 +40,7 @@ In addition, get the moon position in IceCube coordinates at the same time.
 >>> from astropy.coordinates import ICRS, get_sun
 >>> from astropy.time import Time
 >>> from astropy.units import radian
->>> from i3astro import I3Dir
+>>> from i3astropy import I3Dir
 
 >>> # Create an astropy time from a daq time
 >>> t = Time(2021, 155525688461058500, format="i3time")

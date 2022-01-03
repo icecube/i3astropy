@@ -3,10 +3,10 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
-module = "i3astro"
+module = "i3astropy"
 author = "Kevin Meagher"
 author-email = "kmeagher@icecube.wisc.edu"
-home-page = "https://github.com/icecube/i3astro"
+home-page = "https://github.com/icecube/i3astropy"
 requires = ["astropy"]
 classifiers = [
     'Development Status :: 4 - Beta',
@@ -25,8 +25,8 @@ classifiers = [
 test = ["pytest-cov", "pytest-isort", "pytest-black", "pytest-flake8", "pytest-pylint"]
 
 [tool.pytest.ini_options]
-testpaths = ["i3astro", "tests", "README.md"]
-addopts = "--isort --black --flake8 --pylint --cov=i3astro --pylint-ignore=tests --doctest-glob='README.md'"
+testpaths = ["i3astropy", "tests", "README.md"]
+addopts = "--isort --black --flake8 --pylint --cov=i3astropy --pylint-ignore=tests --doctest-glob='README.md'"
 flake8-max-line-length = 108
 flake8-ignore = "E203, W503, F401"
 

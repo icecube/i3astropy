@@ -10,7 +10,7 @@ from astropy.units import day
 from matplotlib.dates import DateFormatter, YearLocator
 from matplotlib.ticker import FormatStrFormatter
 
-from i3astro import I3Dir
+from i3astropy import I3Dir
 
 warnings.simplefilter("ignore")
 

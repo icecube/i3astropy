@@ -1,11 +1,13 @@
+#!/usr/bin/env python
 import numpy as np
 from astropy import units as u
 from astropy.coordinates import ICRS
 from astropy.time import Time
 from numpy import allclose
 
-from i3astro import I3Dir
+from i3astropy import I3Dir
 
+#need file from /data/ana/analyses/ps_tracks/version-004-p00/IC86_2019_exp.npy
 f = np.load("IC86_2019_exp.npy")
 N = 10000
 
