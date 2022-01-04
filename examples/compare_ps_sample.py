@@ -7,7 +7,7 @@ from numpy import allclose
 
 from i3astropy import I3Dir
 
-#need file from /data/ana/analyses/ps_tracks/version-004-p00/IC86_2019_exp.npy
+# need file from /data/ana/analyses/ps_tracks/version-004-p00/IC86_2019_exp.npy
 f = np.load("IC86_2019_exp.npy")
 N = 10000
 

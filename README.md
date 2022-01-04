@@ -75,7 +75,7 @@ everyday for a year.
 variation in altitude from orbit to orbit as the Moon's inclination changes relative ot the equator.
 Also shown is the maximum zenith for each Lunar cycle. 
 
-![Lunar Cycles](./examples/plot_moon1.svg) ![Max Lunar Altitude per Cycle](./examples/plot_moon2.svg)
+![Lunar Cycles](./examples/plot_moon.svg)
 
 [plot_sun_azimuth.py](./examples/plot_sun_azimuth.py) plots the IceCube Azimuth of the Sun and First Point
 of Ares on the Vernal Equinox next to a diagram of the IceCube detector with IceCube Azimuth labeled and

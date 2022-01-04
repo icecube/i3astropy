@@ -19,7 +19,7 @@ T = 27.322
 N_PERIODS = 252
 toff = np.linspace(0, T, 50)
 
-fig1, ax1 = plt.subplots(1, 1)
+fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=[12, 4.8])
 min_t = []
 min_zenith = []
 min_dir = []
@@ -41,7 +41,6 @@ ax1.set_ylabel("Moon Zenith")
 ax1.yaxis.set_major_formatter(FormatStrFormatter("%d\u00b0"))
 ax1.grid()
 
-fig2, ax2 = plt.subplots(1, 1)
 min_t = Time(min_t)
 ax2.plot(min_t.plot_date, min_zenith)
 
@@ -54,4 +53,5 @@ ax2.set_ylabel("Moon Zenith at Minimum")
 ax2.yaxis.set_major_formatter(FormatStrFormatter("%d\u00b0"))
 ax2.grid()
 
+fig1.tight_layout()
 plt.show()
