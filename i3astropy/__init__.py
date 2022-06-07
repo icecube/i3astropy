@@ -1,5 +1,9 @@
+# Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
+# SPDX-License-Identifier:  GPL-3.0-or-later
+# Author: Kevin Meagher
+
 """
-Astropy support for IceCube local coordinates.
+Astropy support for the IceCube Coordinate System.
 """
 
 __all__ = ["I3Time", "I3Dir", "i3location"]

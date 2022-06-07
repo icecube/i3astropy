@@ -1,9 +1,10 @@
 [![Tests](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml)
 [![codecov](https://codecov.io/gh/icecube/i3astropy/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astropy)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # i3astropy
 
-Astropy support for IceCube local coordinates.
+Astropy support for the IceCube Coordinate System.
 
 Astropy is an extensive software collection which includes routines to convert between local and celestial coordinates.
 Because of IceCube's unique location at the Geographic South Pole, it doesn't use the standard altitude/azimuth
@@ -14,6 +15,12 @@ This python module provides a small extension to astropy with a class called `i3
 `astropy.coordinates.baseframe.BaseCoordinateFrame`, which can be used for all astropy coordinate transforms.
 In addition, a time format is provided to allow IceCube DAQ times to be entered directly.
 For more information on astropy coordinate transform see the [astropy docs](https://docs.astropy.org/en/stable/coordinates/index.html).
+
+## License
+
+Code in this repository is Copyright (c) 2022, The IceCube Collaboration (https://icecube.wisc.edu)
+
+Code in this repository is listened under the GNU General Public License v3.0 or later(GPL-3.0-or-later). A copy is included in the LICENSE file.
 
 ## Installation
 

@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
+# SPDX-License-Identifier:  GPL-3.0-or-later
+# Author: Kevin Meagher
+
 import warnings
 
 import numpy as np

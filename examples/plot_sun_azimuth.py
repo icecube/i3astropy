@@ -1,7 +1,12 @@
 #!/usr/bin/env python
+
+# Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
+# SPDX-License-Identifier:  GPL-3.0-or-later
+# Author: Kevin Meagher
+
 # This example can verify that the azimuth is defined correctly with reference to the sun
 # It is obvious that the sun should be at Grid South at midnight,
-# Grid East at 6:00, Grid North at 12:00, and Grid West at 18:00
+# Grid East at 6:00, Grid North at noon, and Grid West at 18:00
 # the example makes a plot to verify that coordinates are defined correctly
 
 import matplotlib.dates as mdates
