@@ -27,3 +27,8 @@ jobs:
         with:
           fail_ci_if_error: false
           verbose: true
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
