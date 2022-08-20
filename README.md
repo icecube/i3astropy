@@ -6,15 +6,21 @@
 
 Astropy support for the IceCube Coordinate System.
 
-Astropy is an extensive software collection which includes routines to convert between local and celestial coordinates.
-Because of IceCube's unique location at the Geographic South Pole, it doesn't use the standard altitude/azimuth
+Astropy is an extensive software collection which includes routines to convert
+between local and celestial coordinates. Because of IceCube's unique location
+at the Geographic South Pole, it doesn't use the standard altitude/azimuth
 coordinate system used by astropy and other astronomical software packages.
-Instead IceCube uses a zenith/azimuth where the azimuth is defined with respect to polar grid directions rather than the local meridian.
-IceCube's local coordinate system is described in depth [here](https://docs.icecube.aq/icetray/main/projects/dataclasses/coordinates.html)).
-This python module provides a small extension to astropy with a class called `i3astropy.I3Dir`, an instance of
-`astropy.coordinates.baseframe.BaseCoordinateFrame`, which can be used for all astropy coordinate transforms.
-In addition, a time format is provided to allow IceCube DAQ times to be entered directly.
-For more information on astropy coordinate transform see the [astropy docs](https://docs.astropy.org/en/stable/coordinates/index.html).
+Instead IceCube uses a zenith/azimuth where the azimuth is defined with respect
+to polar grid directions rather than the local meridian. IceCube's local
+coordinate system is described in
+[in the icetray documentation](https://docs.icecube.aq/icetray/main/projects/dataclasses/coordinates.html).
+This python module provides a small extension to astropy with a class called
+`i3astropy.I3Dir`, an instance of
+[BaseCoordinateFrame](https://docs.astropy.org/en/stable/api/astropy.coordinates.BaseCoordinateFrame.html)
+which can be used for all astropy coordinate transforms. In addition, a time
+format is provided to allow IceCube DAQ times to be entered directly.
+For more information on astropy coordinate transform see the
+[astropy documentation](https://docs.astropy.org/en/stable/coordinates/index.html).
 
 ## License
 

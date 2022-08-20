@@ -27,8 +27,8 @@ dependencies = ["astropy"]
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-test = ["pytest-cov", "pytest-pylint"]
-devel = ["pre-commit"]
+test = ["pytest-cov"]
+devel = ["pre-commit", "pylint"]
 
 [project.urls]
 Source = "https://github.com/icecube/i3astropy"
@@ -53,5 +53,5 @@ max-line-length = "108"
 disable = "E0611"
 
 [tool.pytest.ini_options]
-testpaths = ["i3astropy", "tests", "README.md"]
-addopts = "--pylint --cov=i3astropy --pylint-ignore=tests --doctest-glob='README.md'"
+testpaths = ["tests", "README.md"]
+addopts = "--cov=i3astropy --doctest-glob='README.md'"

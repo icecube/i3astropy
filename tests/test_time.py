@@ -3,6 +3,9 @@
 # Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
 # SPDX-License-Identifier:  GPL-3.0-or-later
 # Author: Kevin Meagher
+"""
+    Tests related to I3Time in i3astropy
+"""
 
 import unittest
 
@@ -11,7 +14,7 @@ from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_equal
 
-import i3astropy  # noqa: F401
+import i3astropy  # noqa: F401  pylint: disable=W0611
 
 try:
     from icecube.dataclasses import I3Time

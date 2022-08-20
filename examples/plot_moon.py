@@ -4,6 +4,12 @@
 # SPDX-License-Identifier:  GPL-3.0-or-later
 # Author: Kevin Meagher
 
+"""
+Plots the zenith of the moon over 252 lunar periods to show the variation in
+altitude from orbit to orbit as the Moon's inclination changes relative ot the
+equator. Also shown is the maximum zenith for each Lunar cycle.
+"""
+
 import warnings
 
 import numpy as np

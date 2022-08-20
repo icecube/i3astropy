@@ -4,11 +4,12 @@
 # SPDX-License-Identifier:  GPL-3.0-or-later
 # Author: Kevin Meagher
 
-# This example can verify that the azimuth is defined correctly with reference to the sun
-# It is obvious that the sun should be at Grid South at midnight,
-# Grid East at 6:00, Grid North at noon, and Grid West at 18:00
-# the example makes a plot to verify that coordinates are defined correctly
-
+"""
+This example can verify that the azimuth is defined correctly with reference to the sun
+It is obvious that the sun should be at Grid South at midnight,
+Grid East at 6:00, Grid North at noon, and Grid West at 18:00
+the example makes a plot to verify that coordinates are defined correctly
+"""
 import matplotlib.dates as mdates
 import numpy as np
 import pylab as plt
@@ -20,9 +21,13 @@ from matplotlib import patches, ticker
 from i3astropy import I3Dir
 
 
-def draw_circ(ax, radius, centX, centY, angle_, theta2_, color_="black"):
+# pylint: disable=R0913
+def draw_circ(axis, radius, cent_x, cent_y, angle_, theta2_, color_="black"):
+    """
+    Draws an arc in matplotlib
+    """
     arc = patches.Arc(
-        [centX, centY],
+        [cent_x, cent_y],
         radius,
         radius,
         angle=angle_,
@@ -33,14 +38,15 @@ def draw_circ(ax, radius, centX, centY, angle_, theta2_, color_="black"):
         lw=1.5,
         color=color_,
     )
-    ax.add_patch(arc)
+    axis.add_patch(arc)
 
-    endX = centX + (radius / 2) * np.cos(np.deg2rad(theta2_ + angle_))  # Do trig to determine end position
-    endY = centY + (radius / 2) * np.sin(np.deg2rad(theta2_ + angle_))
+    # Do trig to determine end position
+    end_x = cent_x + (radius / 2) * np.cos(np.deg2rad(theta2_ + angle_))
+    end_y = cent_y + (radius / 2) * np.sin(np.deg2rad(theta2_ + angle_))
 
-    ax.add_patch(  # Create triangle as arrow head
+    axis.add_patch(  # Create triangle as arrow head
         patches.RegularPolygon(
-            (endX, endY),  # (x,y)
+            (end_x, end_y),  # (x,y)
             3,  # number of vertices
             radius / 7,  # radius
             np.deg2rad(angle_ + theta2_),  # orientation
@@ -53,47 +59,51 @@ fig, (ax1, ax2) = plt.subplots(
     1, 2, figsize=[12, 4.8], gridspec_kw=dict(width_ratios=(1, 1.1), wspace=0.35, left=0.06, right=0.97)
 )
 
-acolor = "tab:blue"
+ARC_COLOR = "tab:blue"
 
-draw_circ(ax1, 200, 0, 0, 0, 315, acolor)
+draw_circ(ax1, 200, 0, 0, 0, 315, ARC_COLOR)
 ax1.text(
     100 / 2**0.5,
     -100 / 2**0.5,
     "Azimuth",
     horizontalalignment="left",
     verticalalignment="top",
-    color=acolor,
+    color=ARC_COLOR,
     size=15,
 )
-ax1.plot([-200, 200], [0, 0], color=acolor)
-ax1.plot([0, 0], [-200, 200], color=acolor)
+ax1.plot([-200, 200], [0, 0], color=ARC_COLOR)
+ax1.plot([0, 0], [-200, 200], color=ARC_COLOR)
 
 
-def xtoe(x):
-    return x / 0.3048 + 46500
+def xtoe(ic_x):
+    "convert IceCube x to survey Eastings"
+    return ic_x / 0.3048 + 46500
 
 
-def etox(E):
-    return 0.3048 * (E - 46500)
+def etox(easting):
+    "convert survey Eastings to IceCube x"
+    return 0.3048 * (easting - 46500)
 
 
-def yton(y):
-    return y / 0.3048 + 52200
+def yton(ic_y):
+    "convert IceCube y to survey Northings"
+    return ic_y / 0.3048 + 52200
 
 
-def ntoy(N):
-    return 0.3048 * (N - 52200)
+def ntoy(northing):
+    "convert survey Northings to IceCube y"
+    return 0.3048 * (northing - 52200)
 
 
 S, E, N, _ = np.loadtxt("IceCubeAsBuiltHoleCoordinates.txt").T
 
 X = []
 Y = []
-factor = 1.14
+OUTLINE_FACTOR = 1.14
 for string in [1, 6, 50, 74, 72, 78, 75, 31, 1]:
     i = np.argwhere(S == string)[0][0]
-    X.append(factor * etox(E[i]))
-    Y.append(factor * ntoy(N[i]))
+    X.append(OUTLINE_FACTOR * etox(E[i]))
+    Y.append(OUTLINE_FACTOR * ntoy(N[i]))
 
 ax1.plot(X, Y, color="k")
 ax1.scatter(etox(E), ntoy(N), color="k", marker=".", s=1.5)

@@ -4,33 +4,39 @@
 # SPDX-License-Identifier:  GPL-3.0-or-later
 # Author: Kevin Meagher
 
+"""
+plots the IceCube Azimuth of the Sun and First Point of Ares on the Vernal
+Equinox next to a diagram of the IceCube detector with IceCube Azimuth labeled
+and the positions of the sun at certain times. This Demonstrates that
+i3astropy is correctly orienting the IceCube coordinate system.
+"""
 import matplotlib.dates as mdates
-import matplotlib.ticker as ticker
 import numpy as np
 import pylab as plt
 from astropy.coordinates import get_sun
 from astropy.time import Time
 from astropy.units import day
+from matplotlib import ticker
 
 from i3astropy import I3Dir
 
-lmargin, rmargin = 0.08, 0.02
-awidth = 0.2
-tmargin, bmargin = 0.01, 0.08
-hgap, vgap = 0.1, 0
+LEFT_MARGIN, RIGHT_MARGIN = 0.08, 0.02
+ANALAMA_WIDTH = 0.2
+TOP_MARGIN, BOTTOM_MARGIN = 0.01, 0.08
+HORIZOTAL_GAP, VERTICAL_GAP = 0.1, 0
 
-rect_analemma = [lmargin, bmargin, awidth, 1 - bmargin - tmargin]
+rect_analemma = [LEFT_MARGIN, BOTTOM_MARGIN, ANALAMA_WIDTH, 1 - BOTTOM_MARGIN - TOP_MARGIN]
 rect_elevation = [
-    lmargin + awidth + hgap,
-    (1 + bmargin - tmargin + hgap) / 2,
-    1 - lmargin - awidth - hgap - rmargin,
-    (1 - bmargin - tmargin - hgap) / 2,
+    LEFT_MARGIN + ANALAMA_WIDTH + HORIZOTAL_GAP,
+    (1 + BOTTOM_MARGIN - TOP_MARGIN + HORIZOTAL_GAP) / 2,
+    1 - LEFT_MARGIN - ANALAMA_WIDTH - HORIZOTAL_GAP - RIGHT_MARGIN,
+    (1 - BOTTOM_MARGIN - TOP_MARGIN - HORIZOTAL_GAP) / 2,
 ]
 rect_time = [
-    lmargin + awidth + hgap,
-    bmargin,
-    1 - lmargin - awidth - hgap - rmargin,
-    (1 - bmargin - tmargin - hgap) / 2,
+    LEFT_MARGIN + ANALAMA_WIDTH + HORIZOTAL_GAP,
+    BOTTOM_MARGIN,
+    1 - LEFT_MARGIN - ANALAMA_WIDTH - HORIZOTAL_GAP - RIGHT_MARGIN,
+    (1 - BOTTOM_MARGIN - TOP_MARGIN - HORIZOTAL_GAP) / 2,
 ]
 
 fig = plt.figure(figsize=(10, 6))
@@ -68,9 +74,9 @@ for n, d in enumerate(T[:-1]):
         slope = -(sun[n + 1].az.degree - sun[n - 1].az.degree) / (
             sun[n + 1].zen.degree - sun[n - 1].zen.degree
         )
-        size = 1
-        x1 = -size / (1 + slope**2) ** 0.5
-        x2 = +size / (1 + slope**2) ** 0.5
+        SIZE = 1
+        x1 = -SIZE / (1 + slope**2) ** 0.5
+        x2 = +SIZE / (1 + slope**2) ** 0.5
 
         ax1.plot(
             [sun[n].az.degree + x1, sun[n].az.degree + x2],
@@ -82,19 +88,19 @@ for n, d in enumerate(T[:-1]):
         )
 
         if sun[n].az.degree < 90:
-            halign = "left"
+            HALIGN = "left"
             text_az = sun[n].az.degree - 1
-            x = -1.5 * size / (1 + slope**2) ** 0.5
+            x = -1.5 * SIZE / (1 + slope**2) ** 0.5
             txt_az = sun[n].az.degree + x
             txt_zen = sun[n].zen.degree + slope * x
         else:
-            halign = "right"
+            HALIGN = "right"
             text_az = sun[n].az.degree + 1
-            x = 1.5 * size / (1 + slope**2) ** 0.5
+            x = 1.5 * SIZE / (1 + slope**2) ** 0.5
             txt_az = sun[n].az.degree + x
             txt_zen = sun[n].zen.degree + slope * x
         ax1.text(
-            txt_az, txt_zen, "1 " + d.strftime("%b"), verticalalignment="center", horizontalalignment=halign
+            txt_az, txt_zen, "1 " + d.strftime("%b"), verticalalignment="center", horizontalalignment=HALIGN
         )
 
 ax1.set_xlabel("Azimuth")

@@ -4,6 +4,14 @@
 # SPDX-License-Identifier:  GPL-3.0-or-later
 # Author: Kevin Meagher
 
+"""
+takes a file from the Neutrino Sources Working Group's datasets and calculate
+the Right Ascension and Declination of the events from the Zenith and Azimuth
+and compare to the coordinates in the data file. It can be seen that i3astropy
+agrees with previous methods to within 0.0002°, the high values for RA and
+azimuth are caused by events close to the pole.
+"""
+
 import numpy as np
 from astropy import units as u
 from astropy.coordinates import ICRS
@@ -30,9 +38,9 @@ assert allclose(f["azi"][:N], i3dir2.az.radian, atol=2e-4)
 assert allclose(i3dir.separation(i3dir2).radian, 0, atol=1e-5)
 
 print(f"Checked {N} events")
-print("Max diff RA            : {:4.6f}°".format(np.rad2deg(max(abs(f["ra"][:N] - icrs2.ra.radian)))))
-print("Max diff dec           : {:4.6f}°".format(np.rad2deg(max(abs(f["dec"][:N] - icrs2.dec.radian)))))
+print(f"Max diff RA            : {np.rad2deg(max(abs(f['ra'][:N] - icrs2.ra.radian))):4.6f}°")
+print(f"Max diff dec           : {np.rad2deg(max(abs(f['dec'][:N] - icrs2.dec.radian))):4.6f}°")
 print(f"Max diff sky separation: {max(icrs2.separation(icrs).degree):4.6f}°")
-print("Max diff zenith        : {:4.6f}°".format(np.rad2deg(max(abs(f["zen"][:N] - i3dir2.zen.radian)))))
-print("Max diff azimuth       : {:4.6f}°".format(np.rad2deg(max(abs(f["azi"][:N] - i3dir2.az.radian)))))
+print(f"Max diff zenith        : {np.rad2deg(max(abs(f['zen'][:N] - i3dir2.zen.radian))):4.6f}°")
+print(f"Max diff azimuth       : {np.rad2deg(max(abs(f['azi'][:N] - i3dir2.az.radian))):4.6f}°")
 print(f"Max diff I3 separation : {max(i3dir.separation(i3dir2).degree):4.6f}°")
