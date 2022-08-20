@@ -21,16 +21,10 @@ jobs:
           python -m flit install --symlink
       - name: Tests
         run: |
+          pre-commit run --all-files
           pytest
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-        use-verbose-mode: 'yes'

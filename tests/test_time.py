@@ -11,7 +11,7 @@ from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_equal
 
-import i3astropy
+import i3astropy  # noqa: F401
 
 try:
     from icecube.dataclasses import I3Time

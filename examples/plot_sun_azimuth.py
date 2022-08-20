@@ -57,8 +57,8 @@ acolor = "tab:blue"
 
 draw_circ(ax1, 200, 0, 0, 0, 315, acolor)
 ax1.text(
-    100 / 2 ** 0.5,
-    -100 / 2 ** 0.5,
+    100 / 2**0.5,
+    -100 / 2**0.5,
     "Azimuth",
     horizontalalignment="left",
     verticalalignment="top",
@@ -68,10 +68,21 @@ ax1.text(
 ax1.plot([-200, 200], [0, 0], color=acolor)
 ax1.plot([0, 0], [-200, 200], color=acolor)
 
-xtoe = lambda x: x / 0.3048 + 46500
-etox = lambda E: 0.3048 * (E - 46500)
-yton = lambda y: y / 0.3048 + 52200
-ntoy = lambda N: 0.3048 * (N - 52200)
+
+def xtoe(x):
+    return x / 0.3048 + 46500
+
+
+def etox(E):
+    return 0.3048 * (E - 46500)
+
+
+def yton(y):
+    return y / 0.3048 + 52200
+
+
+def ntoy(N):
+    return 0.3048 * (N - 52200)
 
 
 S, E, N, _ = np.loadtxt("IceCubeAsBuiltHoleCoordinates.txt").T

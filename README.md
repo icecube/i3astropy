@@ -29,13 +29,12 @@ To install with pip:
     pip install [--user] git+https://github.com/icecube/i3astropy.git
 
 If you want to develop i3astropy you can install directly with flit.
-The ``-s`` option will symlink the module into site-packages rather than copying it,
+The `-s` option will symlink the module into site-packages rather than copying it,
 so that you can test changes without reinstalling the module:
 
     git clone git@github.com:icecube/i3astropy.git
     cd i3astropy
     flit install [--user] -s
-
 
 ## Tutorial
 
@@ -80,7 +79,7 @@ everyday for a year.
 
 [plot_moon.py](./examples/plot_moon.py) plots the zenith of the moon over 252 lunar periods to show the
 variation in altitude from orbit to orbit as the Moon's inclination changes relative ot the equator.
-Also shown is the maximum zenith for each Lunar cycle. 
+Also shown is the maximum zenith for each Lunar cycle.
 
 ![Lunar Cycles](./examples/plot_moon.svg)
 
@@ -91,11 +90,10 @@ IceCube coordinate system.
 
 ![Sun Azimuth](./examples/plot_sun_azimuth.svg)
 
-
 [compare_ps_sample.py](examples/compare_ps_sample.py) takes a file from the Neutrino Sources Working
 Group's datasets and calculate the Right Ascension and Declination of the events from the Zenith and
 Azimuth and compare to the coordinates in the data file. It can be seen that i3astropy agrees with previous
-methods to within 0.0002°, the high values for RA and azimuth are caused by events close to the pole. 
+methods to within 0.0002°, the high values for RA and azimuth are caused by events close to the pole.
 
 ```
 Checked 10000 events

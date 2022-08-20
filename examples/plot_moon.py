@@ -36,7 +36,7 @@ for i in range(N_PERIODS):
     imin = np.argmin(zenith)
     min_t.append(t1 + toff[imin] * day)
     min_zenith.append(zenith[imin])
-    print("{:03}".format(i), min_t[-1], min_zenith[-1])
+    print(f"{i:03}", min_t[-1], min_zenith[-1])
 
 ax1.set_xlabel("Phase of Moon [Days]")
 ax1.set_xlim(0, T)
