@@ -30,17 +30,22 @@ icrs = ICRS(ra=f["ra"][:N] * u.rad, dec=f["dec"][:N] * u.rad)
 icrs2 = i3dir.transform_to(ICRS())
 i3dir2 = icrs.transform_to(I3Dir(obstime=time))
 
-assert allclose(f["ra"][:N], icrs2.ra.radian, atol=1e-3)
+ic_ra = np.cos(f["dec"][:N]) * f["ra"][:N]
+ic_az = np.sin(f["zen"][:N]) * f["azi"][:N]
+ap_ra = np.cos(icrs2.dec.radian) * icrs2.ra.radian
+ap_az = np.sin(i3dir2.zen.radian) * i3dir2.az.radian
+
+assert allclose(ic_ra, ap_ra, atol=1e-5)
 assert allclose(f["dec"][:N], icrs2.dec.radian, atol=1e-5)
 assert allclose(icrs2.separation(icrs).radian, 0, atol=1e-5)
 assert allclose(f["zen"][:N], i3dir2.zen.radian, atol=1e-5)
-assert allclose(f["azi"][:N], i3dir2.az.radian, atol=2e-4)
+assert allclose(ic_az, ap_az, atol=1e-5)
 assert allclose(i3dir.separation(i3dir2).radian, 0, atol=1e-5)
 
 print(f"Checked {N} events")
-print(f"Max diff RA            : {np.rad2deg(max(abs(f['ra'][:N] - icrs2.ra.radian))):4.6f}°")
+print(f"Max diff RA            : {np.rad2deg(max(abs(ic_ra-ap_ra))):4.6f}°")
 print(f"Max diff dec           : {np.rad2deg(max(abs(f['dec'][:N] - icrs2.dec.radian))):4.6f}°")
 print(f"Max diff sky separation: {max(icrs2.separation(icrs).degree):4.6f}°")
 print(f"Max diff zenith        : {np.rad2deg(max(abs(f['zen'][:N] - i3dir2.zen.radian))):4.6f}°")
-print(f"Max diff azimuth       : {np.rad2deg(max(abs(f['azi'][:N] - i3dir2.az.radian))):4.6f}°")
+print(f"Max diff azimuth       : {np.rad2deg(max(abs(ic_az-ap_az))):4.6f}°")
 print(f"Max diff I3 separation : {max(i3dir.separation(i3dir2).degree):4.6f}°")

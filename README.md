@@ -103,10 +103,10 @@ methods to within 0.0002°, the high values for RA and azimuth are caused by eve
 
 ```
 Checked 10000 events
-Max diff RA            : 0.012402°
+Max diff RA            : 0.000759°
 Max diff dec           : 0.000173°
 Max diff sky separation: 0.000174°
 Max diff zenith        : 0.000173°
-Max diff azimuth       : 0.010999°
+Max diff azimuth       : 0.000716°
 Max diff I3 separation : 0.000174°
 ```
