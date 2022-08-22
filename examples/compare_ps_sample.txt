@@ -1,7 +1,0 @@
-Checked 10000 events
-Max diff RA            : 0.012402°
-Max diff dec           : 0.000173°
-Max diff sky separation: 0.000174°
-Max diff zenith        : 0.000173°
-Max diff azimuth       : 0.010999°
-Max diff I3 separation : 0.000174°
