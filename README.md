@@ -1,6 +1,13 @@
+<!--
+SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+
+SPDX-License-Identifier: BSD-2-Clause
+-->
+
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/icecube/i3astropy/main.svg)](https://results.pre-commit.ci/latest/github/icecube/i3astropy/main)
 [![Tests](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml)
 [![codecov](https://codecov.io/gh/icecube/i3astropy/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astropy)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
 # i3astropy
 
@@ -22,11 +29,11 @@ format is provided to allow IceCube DAQ times to be entered directly.
 For more information on astropy coordinate transform see the
 [astropy documentation](https://docs.astropy.org/en/stable/coordinates/index.html).
 
-## License
+## Copying
 
-Code in this repository is Copyright (c) 2022, The IceCube Collaboration (https://icecube.wisc.edu)
+Code in this repository is copyright © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
 
-Code in this repository is listened under the GNU General Public License v3.0 or later(GPL-3.0-or-later). A copy is included in the LICENSE file.
+Code in this repository is listened under the The 2-Clause BSD License (BSD-2-Clause). A copy is available in LICENSES/BSD-2-Clause.txt.
 
 ## Installation
 

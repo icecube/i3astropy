@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
-# SPDX-License-Identifier:  GPL-3.0-or-later
-# Author: Kevin Meagher
+# SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
 
 """
 This example can verify that the azimuth is defined correctly with reference to the sun
@@ -10,6 +10,8 @@ It is obvious that the sun should be at Grid South at midnight,
 Grid East at 6:00, Grid North at noon, and Grid West at 18:00
 the example makes a plot to verify that coordinates are defined correctly
 """
+import os.path
+
 import matplotlib.dates as mdates
 import numpy as np
 import pylab as plt
@@ -46,10 +48,10 @@ def draw_circ(axis, radius, cent_x, cent_y, angle_, theta2_, color_="black"):
 
     axis.add_patch(  # Create triangle as arrow head
         patches.RegularPolygon(
-            (end_x, end_y),  # (x,y)
-            3,  # number of vertices
-            radius / 7,  # radius
-            np.deg2rad(angle_ + theta2_),  # orientation
+            xy=(end_x, end_y),
+            numVertices=3,
+            radius=radius / 7,
+            orientation=np.deg2rad(angle_ + theta2_),
             color=color_,
         )
     )
@@ -95,7 +97,8 @@ def ntoy(northing):
     return 0.3048 * (northing - 52200)
 
 
-S, E, N, _ = np.loadtxt("IceCubeAsBuiltHoleCoordinates.txt").T
+dirname = os.path.dirname(os.path.realpath(__file__))
+S, E, N, _ = np.loadtxt(os.path.join(dirname, "IceCubeAsBuiltHoleCoordinates.txt")).T
 
 X = []
 Y = []

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
+
 ci:
   autoupdate_commit_msg: 'chore: update pre-commit hooks'
 repos:
@@ -8,10 +12,10 @@ repos:
     args: [--autofix]
   - id: pretty-format-yaml
     args: [--autofix]
-# - repo: https://github.com/fsfe/reuse-tool
-#   rev: v1.0.0
-#   hooks:
-#   - id: reuse
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v1.0.0
+  hooks:
+  - id: reuse
 - repo: https://github.com/asottile/pyupgrade
   rev: v2.38.2
   hooks:
@@ -40,13 +44,6 @@ repos:
   rev: v2.15.3
   hooks:
   - id: pylint
-#    args: [--max-line-length=108, -d E0401]
-# - repo: https://github.com/pre-commit/mirrors-mypy
-#   rev: v0.981
-#   hooks:
-#   - id: mypy
-#     args: [--disallow-untyped-defs, --disallow-incomplete-defs, --check-untyped-defs, --disallow-untyped-decorators]
-#     additional_dependencies: [numpy]
 - repo: https://github.com/codespell-project/codespell
   rev: v2.2.1
   hooks:
@@ -59,9 +56,6 @@ repos:
   - id: python-no-log-warn
   - id: python-no-eval
   - id: python-use-type-annotations
-  # - id: rst-backticks
-  # - id: rst-directive-colons
-  # - id: rst-inline-touching-normal
 - repo: https://github.com/Lucas-C/pre-commit-hooks
   rev: v1.3.1
   hooks:
@@ -76,7 +70,6 @@ repos:
   - id: check-case-conflict
   - id: check-docstring-first
   - id: check-executables-have-shebangs
-#  - id: check-json
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
   - id: check-toml

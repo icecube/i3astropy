@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
+
 1  45659.658656  50490.417167  9282.866868
 2  46064.298082  50554.819845  9284.344892
 3  46470.043162  50619.485538  9284.559562

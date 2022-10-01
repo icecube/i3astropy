@@ -1,6 +1,6 @@
-# Copyright (c) 2022, The IceCube Collaboration, All Rights Reserved
-# SPDX-License-Identifier:  GPL-3.0-or-later
-# Author: Kevin Meagher
+# SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
 
 """
 Astropy support for the IceCube Coordinate System.
