@@ -84,7 +84,7 @@ everyday for a year.
 ![Analemma](./examples/plot_analemma.svg)
 
 [plot_moon.py](./examples/plot_moon.py) plots the zenith of the moon over 252 lunar periods to show the
-variation in altitude from orbit to orbit as the Moon's inclination changes relative ot the equator.
+variation in altitude from orbit to orbit as the Moon's inclination changes relative to the equator.
 Also shown is the maximum zenith for each Lunar cycle.
 
 ![Lunar Cycles](./examples/plot_moon.svg)

@@ -6,7 +6,7 @@
 
 """
 Plots the zenith of the moon over 252 lunar periods to show the variation in
-altitude from orbit to orbit as the Moon's inclination changes relative ot the
+altitude from orbit to orbit as the Moon's inclination changes relative to the
 equator. Also shown is the maximum zenith for each Lunar cycle.
 """
 
