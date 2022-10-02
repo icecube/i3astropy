@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+SPDX-FileCopyrightText: © 2022 the IceCube i3astropy contributors (https://github.com/icecube/i3astropy/graphs/contributors)
 
 SPDX-License-Identifier: BSD-2-Clause
 -->
@@ -28,12 +28,6 @@ which can be used for all astropy coordinate transforms. In addition, a time
 format is provided to allow IceCube DAQ times to be entered directly.
 For more information on astropy coordinate transform see the
 [astropy documentation](https://docs.astropy.org/en/stable/coordinates/index.html).
-
-## Copying
-
-Code in this repository is copyright © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
-
-Code in this repository is listened under the The 2-Clause BSD License (BSD-2-Clause). A copy is available in LICENSES/BSD-2-Clause.txt.
 
 ## Installation
 

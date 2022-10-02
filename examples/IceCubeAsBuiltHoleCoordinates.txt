@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2022 IceCube Collaboration <https://icecube.wisc.edu/>
+# SPDX-FileCopyrightText: © 2022 the IceCube i3astropy contributors (https://github.com/icecube/i3astropy/graphs/contributors)
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
