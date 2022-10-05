@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2022 the IceCube i3astropy contributors (https://github.com/icecube/i3astropy/graphs/contributors)
+# SPDX-FileCopyrightText: © 2022 the i3astropy contributors
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
@@ -53,7 +53,6 @@ line_length = 108
 
 [tool.pylint.format]
 max-line-length = "108"
-ignore-long-lines = "Copyright"
 
 [tool.pylint.messages_control]
 disable = [ "W0201", "R0903", "E0401"]
