@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: BSD-2-Clause
+
+site_name: i3astropy
+copyright: © 2022 the i3astropy contributors
+site_description: Astropy support for IceCube local coordinates
+repo_url: https://github.com/icecube/i3astropy
+theme: readthedocs
