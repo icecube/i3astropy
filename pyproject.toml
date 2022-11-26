@@ -34,7 +34,7 @@ dynamic = ["version", "description"]
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov"]
 docs = ['mkdocs']
-devel = ["pre-commit"]
+dev = ["pre-commit"]
 examples = ["matplotlib"]
 
 [project.urls]
