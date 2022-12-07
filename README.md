@@ -5,7 +5,7 @@ SPDX-License-Identifier: BSD-2-Clause
 -->
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/icecube/i3astropy/main.svg)](https://results.pre-commit.ci/latest/github/icecube/i3astropy/main)
-[![Tests](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/icecube/i3astropy/actions/workflows/unit_tests.yml)
+[![Tests](https://github.com/icecube/i3astropy/actions/workflows/tests.yml/badge.svg)](https://github.com/icecube/i3astropy/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/icecube/i3astropy/branch/main/graph/badge.svg?token=VSU1VR44Y2)](https://codecov.io/gh/icecube/i3astropy)
 [![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
