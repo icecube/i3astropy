@@ -70,7 +70,6 @@ ax3.set_xlim((T.plot_date[0] - 1, T.plot_date[-1]))
 plt_info = ax1.plot(sun.az, sun.zen)
 for n, d in enumerate(T[:-1]):
     if d.datetime.day == 1:
-
         slope = -(sun[n + 1].az.degree - sun[n - 1].az.degree) / (
             sun[n + 1].zen.degree - sun[n - 1].zen.degree
         )

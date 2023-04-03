@@ -3,62 +3,62 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 [build-system]
-requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
+requires = ["flit_core >=2,<4"]
 
 [project]
+authors = [{name = "Kevin Meagher"}]
+classifiers = [
+  'Development Status :: 4 - Beta',
+  'Intended Audience :: Science/Research',
+  'License :: OSI Approved :: BSD License',
+  'Operating System :: MacOS :: MacOS X',
+  'Operating System :: POSIX :: Linux',
+  'Programming Language :: Python',
+  'Programming Language :: Python :: 3.7',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Topic :: Scientific/Engineering :: Astronomy',
+  'Topic :: Scientific/Engineering :: Physics'
+]
+dependencies = ["numpy", "astropy"]
+dynamic = ["version", "description"]
+keywords = ["python", "science", "astronomy", "astrophysics", "astropy", "IceCube", "neutrino"]
+license = {file = "LICENSES/BSD-2-Clause.txt"}
 name = "i3astropy"
 readme = "README.md"
 requires-python = "~=3.7"
-license = {file = "LICENSES/BSD-2-Clause.txt"}
-authors = [{name = "Kevin Meagher"}]
-keywords = ["python", "science", "astronomy", "astrophysics", "astropy", "IceCube", "neutrino"]
-classifiers = [
-    'Development Status :: 4 - Beta',
-    'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: BSD License',
-    'Operating System :: MacOS :: MacOS X',
-    'Operating System :: POSIX :: Linux',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
-    'Programming Language :: Python :: 3.11',
-    'Topic :: Scientific/Engineering :: Astronomy',
-    'Topic :: Scientific/Engineering :: Physics',
-    ]
-dependencies = ["numpy", "astropy"]
-dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-cov"]
-docs = ['mkdocs']
 dev = ["pre-commit"]
+docs = ['mkdocs']
 examples = ["matplotlib"]
+test = ["pytest", "pytest-cov"]
 
 [project.urls]
-Source = "https://github.com/icecube/i3astropy"
 Collaboration = "https://icecube.wisc.edu"
+Source = "https://github.com/icecube/i3astropy"
 
 [tool.black]
 line-length = 108
 target-version = ['py37']
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
 ensure_newline_before_comments = true
+force_grid_wrap = 0
+include_trailing_comma = true
 line_length = 108
+multi_line_output = 3
+use_parentheses = true
 
 [tool.pylint.format]
 max-line-length = "108"
 
 [tool.pylint.messages_control]
-disable = [ "W0201", "R0903", "E0401"]
+disable = ["W0201", "R0903", "E0401"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "README.md"]
 addopts = "--cov=i3astropy --doctest-glob='README.md'"
+testpaths = ["tests", "README.md"]

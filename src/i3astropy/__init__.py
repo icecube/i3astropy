@@ -107,7 +107,6 @@ class I3DirToAltAz(CoordinateTransform):
         super().__init__(I3Dir, AltAz)
 
     def __call__(self, i3dir, *args, **kwargs):
-
         alt = 90 * deg - i3dir.zen
         azi = 90 * deg - i3dir.az - i3location.lon
         return AltAz(alt=alt, az=azi, location=i3dir.location, obstime=i3dir.obstime)
