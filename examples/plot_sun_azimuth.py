@@ -58,7 +58,10 @@ def draw_circ(axis, radius, cent_x, cent_y, angle_, theta2_, color_="black"):
 
 
 fig, (ax1, ax2) = plt.subplots(
-    1, 2, figsize=[12, 4.8], gridspec_kw=dict(width_ratios=(1, 1.1), wspace=0.35, left=0.06, right=0.97)
+    1,
+    2,
+    figsize=[12, 4.8],
+    gridspec_kw={"width_ratios": (1, 1.1), "wspace": 0.35, "left": 0.06, "right": 0.97},
 )
 
 ARC_COLOR = "tab:blue"
