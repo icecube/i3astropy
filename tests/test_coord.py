@@ -72,7 +72,6 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(i3sp.zen.degree, 0, 0)
 
     def test_j2000_to_i3dir_array(self):
-
         """
         test conversions from J2000 to I3Direction with arrays
         """
@@ -107,7 +106,6 @@ class TestI3AstroPy(unittest.TestCase):
         assert_allclose(i3dir.zen.degree, 90, atol=0.2)
 
     def test_i3dir_to_j2000(self):
-
         """
         conversions from I3Direction to J2000
         """
@@ -167,7 +165,6 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(get_sun(Time("2020-12-21 10:03")).transform_to(I3Dir()).zen.degree, 66.56, 1)
 
     def test_sun_array(self):
-
         """
         conversions from the sun to I3Direction with arrays
         """
