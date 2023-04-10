@@ -23,9 +23,10 @@ i3location = EarthLocation(lat=-89.9944 * deg, lon=-62.6081 * deg, height=883.9 
 
 
 class I3Time(TimeFormat):
-    """Time format for IceCube's DAQ format, times are expressed as two integers:
-    The UTC year and the number of tenths of nanoseconds since the start of the UTC Year
-    including leapseconds.
+    """Time format for IceCube's DAQ format.
+
+    Times are expressed as two integers: The UTC year and the number of
+    tenths of nanoseconds since the start of the UTC Year including leap seconds.
     """
 
     name = "i3time"  # Unique format name
@@ -34,6 +35,7 @@ class I3Time(TimeFormat):
 
     def set_jds(self, val1, val2):
         """Set the internal jd1 and jd2 values from the input val1, val2.
+
         The input values are expected to conform to this format, as
         validated by self._check_val_type(val1, val2) during __init__.
         """
@@ -85,20 +87,24 @@ class I3Dir(BaseCoordinateFrame):
     location = i3location
 
     def __init__(self, *args, **kwargs) -> None:
+        """Initialize I3Dir."""
         if "zen" in kwargs and "az" in kwargs and "r" not in kwargs:
             kwargs["r"] = 1
         super().__init__(*args, **kwargs)
 
 
 class I3DirToAltAz(CoordinateTransform):
-    """Convert from icecube coordinates to standard astronomy coordinates for
-    local directions.
+    """Convert from icecube coordinates to standard astronomy coordinates.
+
+    For local directions.
     """
 
     def __init__(self) -> None:
+        """Initialize I3DirToAltAz."""
         super().__init__(I3Dir, AltAz)
 
     def __call__(self, i3dir, *args, **kwargs):  # noqa: ARG002
+        """Call I3DirToAltAz."""
         alt = 90 * deg - i3dir.zen
         azi = 90 * deg - i3dir.az - i3location.lon
         return AltAz(alt=alt, az=azi, location=i3dir.location, obstime=i3dir.obstime)
@@ -108,9 +114,11 @@ class AltAzToI3Dir(CoordinateTransform):
     """Convert from local astronomy coordinates to IceCube coordinates."""
 
     def __init__(self) -> None:
+        """Initialize AltAzToI3Dir."""
         super().__init__(AltAz, I3Dir)
 
     def __call__(self, altaz, *args, **kwargs):  # noqa: ARG002
+        """Call AltAzToI3Dir."""
         zen = 90 * deg - altaz.alt
         azi = 90 * deg - altaz.az - i3location.lon
         return I3Dir(az=azi, zen=zen, obstime=altaz.obstime)

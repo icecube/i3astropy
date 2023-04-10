@@ -4,7 +4,8 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""This example can verify that the azimuth is defined correctly with reference to the sun
+"""Example to verify that the azimuth is defined correctly with reference to the sun.
+
 It is obvious that the sun should be at Grid South at midnight,
 Grid East at 6:00, Grid North at noon, and Grid West at 18:00
 the example makes a plot to verify that coordinates are defined correctly.
@@ -77,22 +78,22 @@ ax1.plot([0, 0], [-200, 200], color=ARC_COLOR)
 
 
 def xtoe(ic_x):
-    "Convert IceCube x to survey Eastings."
+    """Convert IceCube x to survey Eastings."""
     return ic_x / 0.3048 + 46500
 
 
 def etox(easting):
-    "Convert survey Eastings to IceCube x."
+    """Convert survey Eastings to IceCube x."""
     return 0.3048 * (easting - 46500)
 
 
 def yton(ic_y):
-    "Convert IceCube y to survey Northings."
+    """Convert IceCube y to survey Northings."""
     return ic_y / 0.3048 + 52200
 
 
 def ntoy(northing):
-    "Convert survey Northings to IceCube y."
+    """Convert survey Northings to IceCube y."""
     return 0.3048 * (northing - 52200)
 
 

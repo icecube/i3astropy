@@ -4,10 +4,11 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""plots the IceCube Azimuth of the Sun and First Point of Ares on the Vernal
-Equinox next to a diagram of the IceCube detector with IceCube Azimuth labeled
-and the positions of the sun at certain times. This Demonstrates that
-i3astropy is correctly orienting the IceCube coordinate system.
+"""Plots the IceCube Azimuth of the Sun and First Point of Ares.
+
+This is done on the Vernal Equinox next to a diagram of the IceCube detector
+with IceCube Azimuth labeled and the positions of the sun at certain times.
+This Demonstrates that i3astropy is correctly orienting the IceCube coordinate system.
 """
 import matplotlib.dates as mdates
 import numpy as np

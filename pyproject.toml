@@ -35,7 +35,7 @@ requires-python = "~=3.7"
 dev = ["pre-commit"]
 docs = ['mkdocs']
 examples = ["matplotlib"]
-test = ["pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov", "pytest-subtests"]
 
 [project.urls]
 Collaboration = "https://icecube.wisc.edu"
@@ -64,21 +64,19 @@ addopts = "--cov=i3astropy --doctest-glob='README.md'"
 testpaths = ["tests", "README.md"]
 
 [tool.ruff]
+fixable = ["I"]
 ignore = [
-  "D",  # pydocstyle
   "ANN",  # flake8-annotations
-  "INP",  # flake8-no-pep420
-  "T20",  # flake8-print
+  "INP001",  # flake8-no-pep420
+  "T201",  # flake8-print
   "S101"  # assert-used
 ]
 line-length = 108
 select = ["ALL"]
 target-version = "py37"
-unfixable = ["PT"]  # flake8-pytest-style
 
 [tool.ruff.per-file-ignores]
-"examples/*" = ["PLR", "ARG"]
-"tests/*" = [
-  "PT",  # flake8-pytest-style
-  "PLR"  # max-statements
+"examples/*" = [
+  "PLR",  # max-statements
+  "ARG"  # flake8-unused-arguments
 ]

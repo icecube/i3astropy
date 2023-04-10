@@ -4,11 +4,13 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""takes a file from the Neutrino Sources Working Group's datasets and calculate
+"""Compares the RA and Dec from a Nu Sources Dataset with the output if i3astropy.
+
+Takes a file from the Neutrino Sources Working Group's datasets and calculate
 the Right Ascension and Declination of the events from the Zenith and Azimuth
-and compare to the coordinates in the data file. It can be seen that i3astropy
-agrees with previous methods to within 0.0002°, the high values for RA and
-azimuth are caused by events close to the pole.
+in that file and compares it to the RA and Dec in the data file.
+It can be seen that i3astropy agrees with previous methods to within 0.0002°,
+the high values for RA and azimuth are caused by events close to the pole.
 """
 
 import numpy as np
