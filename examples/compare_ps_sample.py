@@ -4,8 +4,7 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""
-takes a file from the Neutrino Sources Working Group's datasets and calculate
+"""takes a file from the Neutrino Sources Working Group's datasets and calculate
 the Right Ascension and Declination of the events from the Zenith and Azimuth
 and compare to the coordinates in the data file. It can be seen that i3astropy
 agrees with previous methods to within 0.0002°, the high values for RA and
@@ -16,9 +15,8 @@ import numpy as np
 from astropy import units as u
 from astropy.coordinates import ICRS
 from astropy.time import Time
-from numpy import allclose
-
 from i3astropy import I3Dir
+from numpy import allclose
 
 # need file from /data/ana/analyses/ps_tracks/version-004-p00/IC86_2019_exp.npy
 f = np.load("IC86_2019_exp.npy")

@@ -4,13 +4,12 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""
-This example can verify that the azimuth is defined correctly with reference to the sun
+"""This example can verify that the azimuth is defined correctly with reference to the sun
 It is obvious that the sun should be at Grid South at midnight,
 Grid East at 6:00, Grid North at noon, and Grid West at 18:00
-the example makes a plot to verify that coordinates are defined correctly
+the example makes a plot to verify that coordinates are defined correctly.
 """
-import os.path
+from pathlib import Path
 
 import matplotlib.dates as mdates
 import numpy as np
@@ -18,16 +17,13 @@ import pylab as plt
 from astropy.coordinates import ICRS, get_sun
 from astropy.time import Time
 from astropy.units import day, deg
-from matplotlib import patches, ticker
-
 from i3astropy import I3Dir
+from matplotlib import patches, ticker
 
 
 # pylint: disable=R0913
 def draw_circ(axis, radius, cent_x, cent_y, angle_, theta2_, color_="black"):
-    """
-    Draws an arc in matplotlib
-    """
+    """Draws an arc in matplotlib."""
     arc = patches.Arc(
         [cent_x, cent_y],
         radius,
@@ -53,7 +49,7 @@ def draw_circ(axis, radius, cent_x, cent_y, angle_, theta2_, color_="black"):
             radius=radius / 7,
             orientation=np.deg2rad(angle_ + theta2_),
             color=color_,
-        )
+        ),
     )
 
 
@@ -81,33 +77,32 @@ ax1.plot([0, 0], [-200, 200], color=ARC_COLOR)
 
 
 def xtoe(ic_x):
-    "convert IceCube x to survey Eastings"
+    "Convert IceCube x to survey Eastings."
     return ic_x / 0.3048 + 46500
 
 
 def etox(easting):
-    "convert survey Eastings to IceCube x"
+    "Convert survey Eastings to IceCube x."
     return 0.3048 * (easting - 46500)
 
 
 def yton(ic_y):
-    "convert IceCube y to survey Northings"
+    "Convert IceCube y to survey Northings."
     return ic_y / 0.3048 + 52200
 
 
 def ntoy(northing):
-    "convert survey Northings to IceCube y"
+    "Convert survey Northings to IceCube y."
     return 0.3048 * (northing - 52200)
 
 
-dirname = os.path.dirname(os.path.realpath(__file__))
-S, E, N, _ = np.loadtxt(os.path.join(dirname, "IceCubeAsBuiltHoleCoordinates.txt")).T
+S, E, N, _ = np.loadtxt(Path(__file__).resolve().parent / "IceCubeAsBuiltHoleCoordinates.txt").T
 
 X = []
 Y = []
 OUTLINE_FACTOR = 1.14
 for string in [1, 6, 50, 74, 72, 78, 75, 31, 1]:
-    i = np.argwhere(S == string)[0][0]
+    i = np.argwhere(string == S)[0][0]
     X.append(OUTLINE_FACTOR * etox(E[i]))
     Y.append(OUTLINE_FACTOR * ntoy(N[i]))
 
@@ -116,10 +111,10 @@ ax1.scatter(etox(E), ntoy(N), color="k", marker=".", s=1.5)
 
 secxax = ax1.secondary_xaxis("top", functions=(xtoe, etox))
 secxax.xaxis.set_major_locator(ticker.MultipleLocator(1000))
-secxax.xaxis.set_major_formatter("E {x:0,.0f}′")
+secxax.xaxis.set_major_formatter("E {x:0,.0f}`")
 secyax = ax1.secondary_yaxis("right", functions=(yton, ntoy))
 secyax.yaxis.set_major_locator(ticker.MultipleLocator(1000))
-secyax.yaxis.set_major_formatter("N {x:0,.0f}′")
+secyax.yaxis.set_major_formatter("N {x:0,.0f}`")
 ax1.set_aspect("equal")
 
 ax1.set_xlim(-900, 900)
@@ -156,7 +151,7 @@ ax2.yaxis.set_minor_locator(ticker.MultipleLocator(15))
 secax = ax2.secondary_yaxis("right")
 secax.yaxis.set_major_locator(ticker.MultipleLocator(90))
 secax.yaxis.set_major_formatter(
-    ticker.FuncFormatter(lambda x, y: ["E", "N", "W", "S"][(int(x) % 360) // 90])
+    ticker.FuncFormatter(lambda x, y: ["E", "N", "W", "S"][(int(x) % 360) // 90]),
 )
 ax2.set_ylabel("Azimuth")
 ax2.set_xlabel("UTC Time")

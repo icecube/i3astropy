@@ -4,10 +4,9 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""
-Test Coordinate transforms in i3astropy
-"""
+"""Test Coordinate transforms in i3astropy."""
 
+import contextlib
 import unittest
 
 import numpy as np
@@ -15,26 +14,18 @@ from astropy import units as u
 from astropy.coordinates import ICRS, Angle, SkyCoord, get_moon, get_sun
 from astropy.time import Time
 from astropy.units import day, deg, hour
+from i3astropy import I3Dir
 from numpy.testing import assert_allclose
 
-from i3astropy import I3Dir
-
-try:
+with contextlib.suppress(ImportError):
     from icecube import astro
-except ImportError:
-    pass
 
 
 class TestI3AstroPy(unittest.TestCase):
-    """
-    Test Coordinate transforms in i3astropy
-    """
+    """Test Coordinate transforms in i3astropy."""
 
     def test_j2000_to_i3dir(self):
-        """
-        test conversions from J2000 to I3Direction
-        """
-
+        """Test conversions from J2000 to I3Direction."""
         obs_time = Time("2020-03-22 12:00:00", format="iso", scale="utc")
 
         # The first point of Ares should be grid north at noon on the vernal equinox
@@ -44,21 +35,21 @@ class TestI3AstroPy(unittest.TestCase):
 
         # RA = 90 should be Grid East
         i3ra90 = SkyCoord(ra=90 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
-            I3Dir()
+            I3Dir(),
         )
         self.assertAlmostEqual(i3ra90.zen.degree, 90, 0)
         self.assertAlmostEqual(i3ra90.az.degree, 0, 0)
 
         # RA =180 should be grid south
         i3ra180 = SkyCoord(ra=180 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
-            I3Dir()
+            I3Dir(),
         )
         self.assertAlmostEqual(i3ra180.zen.degree, 90, 0)
         self.assertAlmostEqual(i3ra180.az.degree, 270, 0)
 
         # RA =270 should be grid west
         i3ra270 = SkyCoord(ra=270 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
-            I3Dir()
+            I3Dir(),
         )
         self.assertAlmostEqual(i3ra270.zen.degree, 90, 0)
         self.assertAlmostEqual(i3ra270.az.degree, 180, 0)
@@ -72,10 +63,7 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(i3sp.zen.degree, 0, 0)
 
     def test_j2000_to_i3dir_array(self):
-        """
-        test conversions from J2000 to I3Direction with arrays
-        """
-
+        """Test conversions from J2000 to I3Direction with arrays."""
         obs_time = Time("2020-03-22 12:00:00", format="iso", scale="utc")
 
         ras = [0, 90, 180, 270, 0, 0] * u.deg
@@ -106,10 +94,7 @@ class TestI3AstroPy(unittest.TestCase):
         assert_allclose(i3dir.zen.degree, 90, atol=0.2)
 
     def test_i3dir_to_j2000(self):
-        """
-        conversions from I3Direction to J2000
-        """
-
+        """Conversions from I3Direction to J2000."""
         obs_time = Time("2020-03-22 12:00:00", format="iso", scale="utc")
 
         # grid east should be ra=90
@@ -141,10 +126,7 @@ class TestI3AstroPy(unittest.TestCase):
         self.assertAlmostEqual(nadir.dec.degree, +90, 0)
 
     def test_sun(self):
-        """
-        conversions from the sun to I3Direction
-        """
-
+        """Conversions from the sun to I3Direction."""
         # times when the Equation of time is stationary
         self.assertAlmostEqual(get_sun(Time("2020-04-15 12:00")).transform_to(I3Dir()).az.degree, 90, 1)
         self.assertAlmostEqual(get_sun(Time("2020-06-13 12:00")).transform_to(I3Dir()).az.degree, 90, 1)
@@ -159,22 +141,22 @@ class TestI3AstroPy(unittest.TestCase):
 
         self.assertAlmostEqual(get_sun(Time("2020-03-20 03:50")).transform_to(I3Dir()).zen.degree, 90, 1)
         self.assertAlmostEqual(
-            get_sun(Time("2020-06-20 21:43")).transform_to(I3Dir()).zen.degree, 113.44, 1
+            get_sun(Time("2020-06-20 21:43")).transform_to(I3Dir()).zen.degree,
+            113.44,
+            1,
         )
         self.assertAlmostEqual(get_sun(Time("2020-09-22 13:31")).transform_to(I3Dir()).zen.degree, 90, 1)
         self.assertAlmostEqual(get_sun(Time("2020-12-21 10:03")).transform_to(I3Dir()).zen.degree, 66.56, 1)
 
     def test_sun_array(self):
-        """
-        conversions from the sun to I3Direction with arrays
-        """
-
+        """Conversions from the sun to I3Direction with arrays."""
         ref_time = Time("2020-03-20 0:00")
         day_offsets = np.arange(366)
         obs_time = ref_time + day_offsets * day
         sun1 = get_sun(obs_time).transform_to(I3Dir())
         ref1 = I3Dir(
-            zen=(90 + 23.44 * np.sin(day_offsets / len(day_offsets) * 2 * np.pi)) * deg, az=270 * deg
+            zen=(90 + 23.44 * np.sin(day_offsets / len(day_offsets) * 2 * np.pi)) * deg,
+            az=270 * deg,
         )
         assert_allclose(sun1.zen.degree, ref1.zen.degree, rtol=0.02)
         assert_allclose(sun1.az.degree, ref1.az.degree, rtol=0.02)
@@ -191,14 +173,11 @@ class TestI3AstroPy(unittest.TestCase):
     @unittest.skipIf("astro" not in globals(), "Not in an icetray environment")
     def test_icetray(self):
         # pylint: disable=R0914
-        """
-        comparisons with IceTray's astro module
-        """
-
+        """Comparisons with IceTray's astro module."""
         obs_time = Time("2020-03-20 0:00") + np.arange(366) * u.day
-        np.random.seed(0)
-        zen = 1 * np.pi * np.random.random(len(obs_time))
-        azi = 2 * np.pi * np.random.random(len(obs_time))
+        rng = np.random.default_rng(seed=0)
+        zen = 1 * np.pi * rng.random(len(obs_time))
+        azi = 2 * np.pi * rng.random(len(obs_time))
 
         i3dir = I3Dir(zen=zen * u.radian, az=azi * u.radian, obstime=obs_time)
         equa = i3dir.transform_to(ICRS())

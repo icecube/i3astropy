@@ -4,23 +4,19 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""
-    Tests related to I3Time in i3astropy
-"""
+"""Tests related to I3Time in i3astropy."""
 
+import contextlib
 import unittest
 
+import i3astropy  # noqa: F401  pylint: disable=W0611
 import numpy as np
 from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_equal
 
-import i3astropy  # noqa: F401  pylint: disable=W0611
-
-try:
+with contextlib.suppress(ImportError):
     from icecube.dataclasses import I3Time
-except ImportError:
-    pass
 
 DAQ_MS = int(1e7)
 DAQ_SEC = int(1e10)
@@ -64,14 +60,10 @@ times = [
 
 
 class TestI3Time(unittest.TestCase):
-    """
-    Tests related to I3Time in i3astropy
-    """
+    """Tests related to I3Time in i3astropy."""
 
     def test_times(self):
-        """
-        Test I3Times match a list of iso times
-        """
+        """Test I3Times match a list of iso times."""
         for daq_year, daq_time, iso in times:
             with self.subTest(daq_year=daq_year, daq_time=daq_time, iso=iso):
                 i3t = Time(daq_year, daq_time, format="i3time")
@@ -100,9 +92,7 @@ class TestI3Time(unittest.TestCase):
 
     @unittest.skipIf("I3Time" not in globals(), "Not in an icetray invironment")
     def test_icetray(self):
-        """
-        Test i3astropy.I3Time matches dataclasses.I3Time
-        """
+        """Test i3astropy.I3Time matches dataclasses.I3Time."""
         for daq_year, daq_time, iso in times:
             with self.subTest(daq_year=daq_year, daq_time=daq_time, iso=iso):
                 di3t = I3Time(daq_year, daq_time)

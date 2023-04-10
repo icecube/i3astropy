@@ -4,8 +4,7 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-"""
-Plots the zenith of the moon over 252 lunar periods to show the variation in
+"""Plots the zenith of the moon over 252 lunar periods to show the variation in
 altitude from orbit to orbit as the Moon's inclination changes relative to the
 equator. Also shown is the maximum zenith for each Lunar cycle.
 """
@@ -17,10 +16,9 @@ import pylab as plt
 from astropy.coordinates import get_moon
 from astropy.time import Time
 from astropy.units import day
+from i3astropy import I3Dir
 from matplotlib.dates import DateFormatter, YearLocator
 from matplotlib.ticker import FormatStrFormatter
-
-from i3astropy import I3Dir
 
 warnings.simplefilter("ignore")
 
@@ -37,7 +35,6 @@ min_dir = []
 for i in range(N_PERIODS):
     t1 = t0 + i * T * day
     zenith = get_moon(t1 + toff * day).transform_to(I3Dir()).zen.degree
-    # zenith = np.full(len(toff), 66)
     ax1.plot(toff, zenith)
     imin = np.argmin(zenith)
     min_t.append(t1 + toff[imin] * day)
