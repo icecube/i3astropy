@@ -63,17 +63,17 @@ In addition, get the Sun position in IceCube coordinates at the same time.
 >>> # Convert IceCube coordinates to celestial
 >>> I3Dir(zen=0.73884 * radian, az=2.7348 * radian, obstime=t).transform_to(ICRS())
 <ICRS Coordinate: (ra, dec) in deg
-    (213.61898984, -47.55991453)>
+    (213.61898984, -47.55991454)>
 
 >>> # Convert Crab Nebula to IceCube coordinates
 >>> ICRS("05h34m31.94", "+22d00m52.2").transform_to(I3Dir(obstime=t))
 <I3Dir Coordinate (obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
-    (286.7095864, 112.03182914, 1.)>
+    (286.7095864, 112.03182913, 1.)>
 
 >>> # Get the Sun location in IceCube Coordinates
 >>> get_sun(t).transform_to(I3Dir())
 <SkyCoord (I3Dir: obstime=(2021, 155525688461058496)): (az, zen, r) in (deg, deg, )
-    (271.46065373, 113.17296322, 1.)>
+    (271.46065373, 113.17296321, 1.)>
 
 ```
 
