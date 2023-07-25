@@ -102,4 +102,4 @@ def test_icetray(subtests):
 
 
 if __name__ == "__main__":
-    pytest.main()
+    pytest.main(["-v", __file__])
