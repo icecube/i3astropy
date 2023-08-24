@@ -7,27 +7,27 @@ ci:
   autoupdate_schedule: quarterly
 repos:
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.9.0
+  rev: v2.10.0
   hooks:
   - id: pretty-format-toml
     args: [--autofix]
   - id: pretty-format-yaml
     args: [--autofix]
 - repo: https://github.com/fsfe/reuse-tool
-  rev: v2.0.0
+  rev: v2.1.0
   hooks:
   - id: reuse
 - repo: https://github.com/psf/black
-  rev: 23.3.0
+  rev: 23.7.0
   hooks:
   - id: black
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.0.277
+  rev: v0.0.285
   hooks:
   - id: ruff
     args: [--fix]
 - repo: https://github.com/pycqa/pylint
-  rev: v3.0.0a6
+  rev: v3.0.0a7
   hooks:
   - id: pylint
 - repo: https://github.com/codespell-project/codespell
@@ -43,7 +43,7 @@ repos:
   - id: python-no-eval
   - id: python-use-type-annotations
 - repo: https://github.com/Lucas-C/pre-commit-hooks
-  rev: v1.5.1
+  rev: v1.5.4
   hooks:
   - id: forbid-crlf
   - id: forbid-tabs

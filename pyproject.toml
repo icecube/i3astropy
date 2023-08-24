@@ -67,7 +67,6 @@ fixable = ["I"]
 ignore = [
   "ANN",  # flake8-annotations
   "INP001",  # flake8-no-pep420
-  "T201",  # flake8-print
   "S101",  # assert-used
   "D213",  # multi-line-summary-second-line incompatible with multi-line-summary-first-line
   "D203",  # one-blank-line-before-class" incompatible with no-blank-line-before-class
@@ -80,5 +79,6 @@ target-version = "py38"
 [tool.ruff.per-file-ignores]
 "examples/*" = [
   "PLR",  # max-statements
-  "ARG"  # flake8-unused-arguments
+  "ARG",  # flake8-unused-arguments
+  "T201"  # flake8-print
 ]
