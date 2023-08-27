@@ -14,9 +14,9 @@ from astropy.coordinates.attributes import TimeAttribute
 from astropy.coordinates.baseframe import BaseCoordinateFrame, RepresentationMapping, frame_transform_graph
 from astropy.coordinates.representation import PhysicsSphericalDifferential, PhysicsSphericalRepresentation
 from astropy.coordinates.transformations import CoordinateTransform
-from astropy.time import Time, TimeFormat
+from astropy.time import TimeFormat
 from astropy.time.core import ScaleValueError
-from astropy.units import deg, m, picosecond, second
+from astropy.units import deg, m
 
 # This is the nominal location of the center of the IceCube detector
 i3location = EarthLocation(lat=-89.9944 * deg, lon=-62.6081 * deg, height=883.9 * m)
@@ -31,11 +31,12 @@ class I3Time(TimeFormat):
 
     name = "i3time"  # Unique format name
     _default_scale = "utc"
-    _DAQ_SEC = int(1e10)
+    _DAQ_SEC_IN_DAY = int(864e12)
 
     def set_jds(self, val1, val2):
-        """Set the internal jd1 and jd2 values from the input val1, val2.
+        """Set the internal jd1 and jd2 values from the input year and DAQ time.
 
+        Year is in val1 and daq time is in val2.
         The input values are expected to conform to this format, as
         validated by self._check_val_type(val1, val2) during __init__.
         """
@@ -48,22 +49,30 @@ class I3Time(TimeFormat):
         if np.any(year != val1):
             msg = f"expected integer type for year, got {val1}"
             raise ValueError(msg)
-        sec, daq = np.divmod(val2, self._DAQ_SEC)
-        time = Time({"year": year}, format="ymdhms", scale="utc")
-        time += sec * second + daq * 100 * picosecond
-        self.jd1, self.jd2 = (time.jd1, time.jd2)
+
+        # divide DAQ time into days and remainder of days
+        days, remainder = np.divmod(val2, self._DAQ_SEC_IN_DAY)
+        # convert start of year to tai
+        tai1, tai2 = erfa.utctai(*erfa.dtf2d(b"UTC", year, 1, 1, 0, 0, 0))
+        # add daq time to start of year in tai and then convert to utc
+        self.jd1, self.jd2 = erfa.taiutc(tai1 + days, tai2 + remainder / self._DAQ_SEC_IN_DAY)
 
     @property
     def value(self):
-        """Return format ``value`` property from internal jd1, jd2."""
+        """Return year and daq time from internal jd1, jd2."""
+        assert self.scale == "utc"
+        # create empty output array with correct type
         out = np.empty(self.jd1.shape, dtype=[("year", "i4"), ("daq_time", "i8")])
-        scale = self.scale.upper().encode("ascii")
-        out["year"], _, _, _ = erfa.d2dtf(scale, 10, self.jd1, self.jd2_filled)
-        time = Time(self.jd1, self.jd2, scale="utc", format="jd")
-        year_start = Time({"year": out["year"]}, format="ymdhms", scale="utc")
-        out["daq_time"] = (time - year_start).to_value(100 * picosecond).round().astype(int)
-        out = out.view(np.recarray)
-        return self.mask_if_needed(out)
+        # get the current year
+        out["year"], _, _, _ = erfa.d2dtf(b"UTC", 10, self.jd1, self.jd2_filled)
+        # get the start of the year in tai jd
+        y1, y2 = erfa.utctai(*erfa.dtf2d(b"UTC", out["year"], 1, 1, 0, 0, 0))
+        # get the current time in tai
+        t1, t2 = erfa.utctai(self.jd1, self.jd2)
+        # subtract the current time from the start of the year in tai
+        out["daq_time"] = np.round(((t1 - y1) + (t2 - y2)) * self._DAQ_SEC_IN_DAY)
+        # return masked array
+        return self.mask_if_needed(out.view(np.recarray))
 
 
 class I3Dir(BaseCoordinateFrame):
