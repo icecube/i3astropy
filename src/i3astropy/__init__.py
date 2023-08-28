@@ -4,7 +4,7 @@
 
 """Astropy support for the IceCube Coordinate System."""
 
-__all__ = ["I3Time", "I3Dir", "i3location"]
+__all__ = ["I3Time", "I3Dir", "I3DirToAltAz", "AltAzToI3Dir", "i3location"]
 __version__ = "0.1"
 
 import erfa
@@ -27,11 +27,18 @@ class I3Time(TimeFormat):
 
     Times are expressed as two integers: The UTC year and the number of
     tenths of nanoseconds since the start of the UTC Year including leap seconds.
+
+    Notes
+    -----
+        :py:class:`astropy.Time` internal storage format has higher precision than DAQ ticks.
+        However, when initializing Time objects astropy converts all parameters to float64,
+        which for values DAQ times close to the end of the year can result in a loss of
+        precision of up to 64 DAQ ticks (6.4 nanoseconds).
     """
 
     name = "i3time"  # Unique format name
     _default_scale = "utc"
-    _DAQ_SEC_IN_DAY = int(864e12)
+    _DAQ_TICKS_IN_DAY = int(864e12)
 
     def set_jds(self, val1, val2):
         """Set the internal jd1 and jd2 values from the input year and DAQ time.
@@ -51,11 +58,11 @@ class I3Time(TimeFormat):
             raise ValueError(msg)
 
         # divide DAQ time into days and remainder of days
-        days, remainder = np.divmod(val2, self._DAQ_SEC_IN_DAY)
+        days, remainder = np.divmod(val2, self._DAQ_TICKS_IN_DAY)
         # convert start of year to tai
         tai1, tai2 = erfa.utctai(*erfa.dtf2d(b"UTC", year, 1, 1, 0, 0, 0))
         # add daq time to start of year in tai and then convert to utc
-        self.jd1, self.jd2 = erfa.taiutc(tai1 + days, tai2 + remainder / self._DAQ_SEC_IN_DAY)
+        self.jd1, self.jd2 = erfa.taiutc(tai1 + days, tai2 + remainder / self._DAQ_TICKS_IN_DAY)
 
     @property
     def value(self):
@@ -69,8 +76,11 @@ class I3Time(TimeFormat):
         y1, y2 = erfa.utctai(*erfa.dtf2d(b"UTC", out["year"], 1, 1, 0, 0, 0))
         # get the current time in tai
         t1, t2 = erfa.utctai(self.jd1, self.jd2)
-        # subtract the current time from the start of the year in tai
-        out["daq_time"] = np.round(((t1 - y1) + (t2 - y2)) * self._DAQ_SEC_IN_DAY)
+        # calculate time deltas and convert to integer
+        d1 = np.round((t1 - y1) * self._DAQ_TICKS_IN_DAY).astype(np.int64)
+        d2 = np.round((t2 - y2) * self._DAQ_TICKS_IN_DAY).astype(np.int64)
+        # add time deltas
+        out["daq_time"] = d1 + d2
         # return masked array
         return self.mask_if_needed(out.view(np.recarray))
 

@@ -11,6 +11,7 @@ import contextlib
 import i3astropy  # noqa: F401  pylint: disable=W0611
 import numpy as np
 import pytest
+from astropy import units as u
 from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_allclose, assert_equal
@@ -71,6 +72,17 @@ def test_times(subtests):
             assert i3t.i3time.daq_time == daq_time
             assert isot.i3time.year == daq_year
             assert isot.i3time.daq_time == daq_time
+
+            delta = np.arange(0, 1000)
+            ddaq = daq_time + delta
+            assert_equal((isot + delta * 1e-10 * u.s).i3time.daq_time, ddaq)
+
+            a, b = np.divmod(ddaq, 1000)
+            t = Time(daq_year, a * 1000, format="i3time") + b * 1e-10 * u.s
+            assert_equal(t.i3time.daq_time, ddaq)
+
+            # allclose make the same asumptions about floating point that astropy makes
+            assert_allclose(Time(daq_year, ddaq, format="i3time").i3time.daq_time, ddaq)
 
     years, daqtime, iso = zip(*times)
     i3t = Time(years, daqtime, format="i3time")
