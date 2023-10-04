@@ -81,7 +81,7 @@ def test_times(subtests):
             t = Time(daq_year, a * 1000, format="i3time") + b * 1e-10 * u.s
             assert_equal(t.i3time.daq_time, ddaq)
 
-            # allclose make the same asumptions about floating point that astropy makes
+            # allclose make the same assumptions about floating point that astropy makes
             assert_allclose(Time(daq_year, ddaq, format="i3time").i3time.daq_time, ddaq)
 
     years, daqtime, iso = zip(*times)
