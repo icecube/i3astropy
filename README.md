@@ -58,7 +58,7 @@ In addition, get the Sun position in IceCube coordinates at the same time.
 >>> # Create an astropy time from a daq time
 >>> t = Time(2021, 155525688461058500, format="i3time")
 >>> t.iso
-'2021-06-30 00:09:28.846'
+'2021-06-30 00:09:28.846105850'
 
 >>> # Convert IceCube coordinates to celestial
 >>> d = I3Dir(zen=0.73884 * radian, az=2.7348 * radian, obstime=t).transform_to(ICRS())

@@ -39,6 +39,7 @@ class I3Time(TimeFormat):
     name = "i3time"  # Unique format name
     _default_scale = "utc"
     _DAQ_TICKS_IN_DAY = int(864e12)
+    _default_precision = 9
 
     def set_jds(self, val1, val2):
         """Set the internal jd1 and jd2 values from the input year and DAQ time.
@@ -71,7 +72,7 @@ class I3Time(TimeFormat):
         # create empty output array with correct type
         out = np.empty(self.jd1.shape, dtype=[("year", "i4"), ("daq_time", "i8")])
         # get the current year
-        out["year"], _, _, _ = erfa.d2dtf(b"UTC", 10, self.jd1, self.jd2_filled)
+        out["year"], _, _, _ = erfa.d2dtf(b"UTC", 10, self.jd1, self.jd2)
         # get the start of the year in tai jd
         y1, y2 = erfa.utctai(*erfa.dtf2d(b"UTC", out["year"], 1, 1, 0, 0, 0))
         # get the current time in tai
@@ -82,7 +83,7 @@ class I3Time(TimeFormat):
         # add time deltas
         out["daq_time"] = d1 + d2
         # return masked array
-        return self.mask_if_needed(out.view(np.recarray))
+        return out.view(np.recarray)
 
 
 class I3Dir(BaseCoordinateFrame):
