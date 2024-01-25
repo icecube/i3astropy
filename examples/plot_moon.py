@@ -18,9 +18,10 @@ import pylab as plt
 from astropy.coordinates import get_moon
 from astropy.time import Time
 from astropy.units import day
-from i3astropy import I3Dir
 from matplotlib.dates import DateFormatter, YearLocator
 from matplotlib.ticker import FormatStrFormatter
+
+from i3astropy import I3Dir
 
 warnings.simplefilter("ignore")
 

@@ -7,6 +7,7 @@
 """Test Coordinate transforms in i3astropy."""
 
 import contextlib
+import sys
 
 import numpy as np
 import pytest
@@ -14,8 +15,9 @@ from astropy import units as u
 from astropy.coordinates import ICRS, Angle, SkyCoord, get_moon, get_sun
 from astropy.time import Time
 from astropy.units import day, deg, hour
-from i3astropy import I3Dir
 from numpy.testing import assert_allclose
+
+from i3astropy import I3Dir
 
 with contextlib.suppress(ImportError):
     from icecube import astro
@@ -206,4 +208,4 @@ def test_icetray():
 
 
 if __name__ == "__main__":
-    pytest.main(["-v", __file__])
+    pytest.main(["-v", __file__, *sys.argv])

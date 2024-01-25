@@ -7,14 +7,16 @@
 """Tests related to I3Time in i3astropy."""
 
 import contextlib
+import sys
 
-import i3astropy  # noqa: F401  pylint: disable=W0611
 import numpy as np
 import pytest
 from astropy import units as u
 from astropy.time import Time
 from astropy.time.core import ScaleValueError
 from numpy.testing import assert_allclose, assert_equal
+
+import i3astropy  # noqa: F401  pylint: disable=W0611
 
 with contextlib.suppress(ImportError):
     from icecube.dataclasses import I3Time  # pylint: disable=E0611
@@ -114,4 +116,4 @@ def test_icetray(subtests):
 
 
 if __name__ == "__main__":
-    pytest.main(["-v", __file__])
+    pytest.main(["-v", __file__, *sys.argv])

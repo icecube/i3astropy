@@ -7,6 +7,8 @@
 __all__ = ["I3Time", "I3Dir", "I3DirToAltAz", "AltAzToI3Dir", "i3location"]
 __version__ = "0.1"
 
+from typing import Any
+
 import erfa
 import numpy as np
 from astropy.coordinates import AltAz, EarthLocation
@@ -17,6 +19,7 @@ from astropy.coordinates.transformations import CoordinateTransform
 from astropy.time import TimeFormat
 from astropy.time.core import ScaleValueError
 from astropy.units import deg, m
+from numpy.typing import NDArray
 
 # This is the nominal location of the center of the IceCube detector
 i3location = EarthLocation(lat=-89.9944 * deg, lon=-62.6081 * deg, height=883.9 * m)
@@ -41,14 +44,14 @@ class I3Time(TimeFormat):
     _DAQ_TICKS_IN_DAY = int(864e12)
     _default_precision = 9
 
-    def set_jds(self, val1, val2):
+    def set_jds(self: "I3Time", val1: NDArray[np.float64], val2: NDArray[np.float64]) -> None:
         """Set the internal jd1 and jd2 values from the input year and DAQ time.
 
         Year is in val1 and daq time is in val2.
         The input values are expected to conform to this format, as
         validated by self._check_val_type(val1, val2) during __init__.
         """
-        self._scale = self._check_scale(self._scale)  # Validate scale.
+        self._scale: str = self._check_scale(self._scale)  # Validate scale.
         if self._scale != "utc":
             msg = f"Got scale '{self._scale}', The only allowed scale for I3Time is 'utc'"
             raise ScaleValueError(msg)
@@ -66,7 +69,7 @@ class I3Time(TimeFormat):
         self.jd1, self.jd2 = erfa.taiutc(tai1 + days, tai2 + remainder / self._DAQ_TICKS_IN_DAY)
 
     @property
-    def value(self):
+    def value(self: "I3Time") -> NDArray[np.float64]:
         """Return year and daq time from internal jd1, jd2."""
         assert self.scale == "utc"
         # create empty output array with correct type
@@ -106,7 +109,7 @@ class I3Dir(BaseCoordinateFrame):
     obstime = TimeAttribute(default=None)
     location = i3location
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self: "I3Dir", *args: Any, **kwargs: Any) -> None:
         """Initialize I3Dir."""
         if "zen" in kwargs and "az" in kwargs and "r" not in kwargs:
             kwargs["r"] = 1
@@ -119,11 +122,11 @@ class I3DirToAltAz(CoordinateTransform):
     For local directions.
     """
 
-    def __init__(self) -> None:
+    def __init__(self: "I3DirToAltAz") -> None:
         """Initialize I3DirToAltAz."""
         super().__init__(I3Dir, AltAz)
 
-    def __call__(self, i3dir, *args, **kwargs):  # noqa: ARG002
+    def __call__(self: "I3DirToAltAz", i3dir: I3Dir, *args: Any, **kwargs: Any) -> AltAz:  # noqa: ARG002
         """Call I3DirToAltAz."""
         alt = 90 * deg - i3dir.zen
         azi = 90 * deg - i3dir.az - i3location.lon
@@ -133,11 +136,11 @@ class I3DirToAltAz(CoordinateTransform):
 class AltAzToI3Dir(CoordinateTransform):
     """Convert from local astronomy coordinates to IceCube coordinates."""
 
-    def __init__(self) -> None:
+    def __init__(self: "AltAzToI3Dir") -> None:
         """Initialize AltAzToI3Dir."""
         super().__init__(AltAz, I3Dir)
 
-    def __call__(self, altaz, *args, **kwargs):  # noqa: ARG002
+    def __call__(self: "AltAzToI3Dir", altaz: AltAz, *args: Any, **kwargs: Any) -> I3Dir:  # noqa: ARG002
         """Call AltAzToI3Dir."""
         zen = 90 * deg - altaz.alt
         azi = 90 * deg - altaz.az - i3location.lon

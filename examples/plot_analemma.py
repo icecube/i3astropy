@@ -16,8 +16,9 @@ import pylab as plt
 from astropy.coordinates import get_sun
 from astropy.time import Time
 from astropy.units import day
-from i3astropy import I3Dir
 from matplotlib import ticker
+
+from i3astropy import I3Dir
 
 LEFT_MARGIN, RIGHT_MARGIN = 0.08, 0.02
 ANALAMA_WIDTH = 0.2

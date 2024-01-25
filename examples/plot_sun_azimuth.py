@@ -18,8 +18,9 @@ import pylab as plt
 from astropy.coordinates import ICRS, get_sun
 from astropy.time import Time
 from astropy.units import day, deg
-from i3astropy import I3Dir
 from matplotlib import patches, ticker
+
+from i3astropy import I3Dir
 
 
 # pylint: disable=R0913

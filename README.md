@@ -48,7 +48,7 @@ so that you can test changes without reinstalling the module:
 This example takes an event which occurred at DAQ time (2021, 155525688461058500) and was reconstructed in the direction of zenith = 0.73884 rad, azimuth = 2.7348 rad and converts it to RA and Dec.
 In addition, get the Sun position in IceCube coordinates at the same time.
 
-```python
+```pycon
 
 >>> from astropy.coordinates import ICRS, get_sun
 >>> from astropy.time import Time
