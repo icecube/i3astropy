@@ -14,13 +14,13 @@ import pytest
 from astropy import units as u
 from astropy.time import Time
 from astropy.time.core import ScaleValueError
-from numpy.testing import assert_allclose, assert_equal
 
 import i3astropy  # noqa: F401  pylint: disable=W0611
 
 with contextlib.suppress(ImportError):
     from icecube.dataclasses import I3Time  # pylint: disable=E0611
 
+approx = pytest.approx
 DAQ_MS = int(1e7)
 DAQ_SEC = int(1e10)
 DAQ_MIN = 60 * DAQ_SEC
@@ -62,39 +62,41 @@ times = [
 ]
 
 
-def test_times(subtests):
+@pytest.mark.parametrize(("daq_year", "daq_time", "iso"), times)
+def test_times(daq_year, daq_time, iso):
     """Test I3Times match a list of iso times."""
-    for daq_year, daq_time, iso in times:
-        with subtests.test(daq_year=daq_year, daq_time=daq_time, iso=iso):
-            i3t = Time(daq_year, daq_time, format="i3time")
-            isot = Time(iso, format="iso", scale="utc")
-            assert i3t.scale == "utc"
-            assert np.all(i3t.isclose(isot))
-            assert i3t.i3time.year == daq_year
-            assert i3t.i3time.daq_time == daq_time
-            assert isot.i3time.year == daq_year
-            assert isot.i3time.daq_time == daq_time
+    i3t = Time(daq_year, daq_time, format="i3time")
+    isot = Time(iso, format="iso", scale="utc")
+    assert i3t.scale == "utc"
+    assert np.all(i3t.isclose(isot))
+    assert i3t.i3time.year == daq_year
+    assert i3t.i3time.daq_time == daq_time
+    assert isot.i3time.year == daq_year
+    assert isot.i3time.daq_time == daq_time
 
-            delta = np.arange(0, 1000)
-            ddaq = daq_time + delta
-            assert_equal((isot + delta * 1e-10 * u.s).i3time.daq_time, ddaq)
+    delta = np.arange(0, 1000)
+    ddaq = daq_time + delta
+    assert (isot + delta * 1e-10 * u.s).i3time.daq_time == approx(ddaq)
 
-            a, b = np.divmod(ddaq, 1000)
-            t = Time(daq_year, a * 1000, format="i3time") + b * 1e-10 * u.s
-            assert_equal(t.i3time.daq_time, ddaq)
+    a, b = np.divmod(ddaq, 1000)
+    t = Time(daq_year, a * 1000, format="i3time") + b * 1e-10 * u.s
+    assert t.i3time.daq_time == approx(ddaq)
 
-            # allclose make the same assumptions about floating point that astropy makes
-            assert_allclose(Time(daq_year, ddaq, format="i3time").i3time.daq_time, ddaq)
+    # make the same assumptions about floating point that astropy makes
+    assert Time(daq_year, ddaq, format="i3time").i3time.daq_time == approx(ddaq)
 
+
+def test_times_array():
+    """Test I3Times match a list of iso times."""
     years, daqtime, iso = zip(*times)
     i3t = Time(years, daqtime, format="i3time")
     isot = Time(iso, format="iso")
 
     assert np.all(i3t.isclose(isot))
-    assert_equal(i3t.i3time.year, years)
-    assert_equal(i3t.i3time.daq_time, daqtime)
-    assert_equal(isot.i3time.year, years)
-    assert_equal(isot.i3time.daq_time, daqtime)
+    assert i3t.i3time.year == approx(years)
+    assert i3t.i3time.daq_time == approx(daqtime)
+    assert isot.i3time.year == approx(years)
+    assert isot.i3time.daq_time == approx(daqtime)
 
     with pytest.raises(ScaleValueError):
         Time(2020, 0, format="i3time", scale="tt")
@@ -103,17 +105,16 @@ def test_times(subtests):
 
 
 @pytest.mark.skipif("I3Time" not in globals(), reason="Not in an icetray invironment")
-def test_icetray(subtests):
+@pytest.mark.parametrize(("daq_year", "daq_time", "iso"), times)
+def test_icetray(daq_year, daq_time, iso):
     """Test i3astropy.I3Time matches dataclasses.I3Time."""
-    for daq_year, daq_time, iso in times:
-        with subtests.test(daq_year=daq_year, daq_time=daq_time, iso=iso):
-            di3t = I3Time(daq_year, daq_time)
-            ai3t = Time(daq_year, daq_time, format="i3time")
-            isot = Time(iso, format="iso")
-            assert str(di3t)[: len(iso)] == iso
-            assert_allclose(di3t.mod_julian_day_double, ai3t.mjd, rtol=1e-9)
-            assert_allclose(di3t.mod_julian_day_double, isot.mjd, rtol=1e-9)
+    di3t = I3Time(daq_year, daq_time)
+    ai3t = Time(daq_year, daq_time, format="i3time")
+    isot = Time(iso, format="iso")
+    assert str(di3t)[: len(iso)] == iso
+    assert di3t.mod_julian_day_double == approx(ai3t.mjd, rel=1e-9)
+    assert di3t.mod_julian_day_double == approx(isot.mjd, rel=1e-9)
 
 
 if __name__ == "__main__":
-    pytest.main(["-v", __file__, *sys.argv])
+    sys.exit(pytest.main(["-v", __file__, *sys.argv[1:]]))

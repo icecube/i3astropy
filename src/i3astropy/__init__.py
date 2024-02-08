@@ -37,6 +37,7 @@ class I3Time(TimeFormat):
         However, when initializing Time objects astropy converts all parameters to float64,
         which for values DAQ times close to the end of the year can result in a loss of
         precision of up to 64 DAQ ticks (6.4 nanoseconds).
+
     """
 
     name = "i3time"  # Unique format name
