@@ -12,15 +12,15 @@ import sys
 import numpy as np
 import pytest
 from astropy import units as u
-from astropy.coordinates import ICRS, Angle, SkyCoord, get_moon, get_sun
+from astropy.coordinates import ICRS, Angle, SkyCoord, get_body, get_sun
 from astropy.time import Time
 from astropy.units import day, deg, hour
-from numpy.testing import assert_allclose
 
 from i3astropy import I3Dir
 
 with contextlib.suppress(ImportError):
     from icecube import astro
+approx = pytest.approx
 
 
 def test_j2000_to_i3dir():
@@ -29,37 +29,37 @@ def test_j2000_to_i3dir():
 
     # The first point of Ares should be grid north at noon on the vernal equinox
     i3fpa = SkyCoord(ra=0 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(I3Dir())
-    assert_allclose(i3fpa.zen.degree, 90, atol=0.15)
-    assert_allclose(i3fpa.az.degree, 90, atol=0.2)
+    assert i3fpa.zen.degree == approx(90, abs=0.15)
+    assert i3fpa.az.degree == approx(90, abs=0.2)
 
     # RA = 90 should be Grid East
     i3ra90 = SkyCoord(ra=90 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
         I3Dir(),
     )
-    assert_allclose(i3ra90.zen.degree, 90, atol=0.003)
-    assert_allclose(i3ra90.az.degree, 0, atol=0.2)
+    assert i3ra90.zen.degree == approx(90, abs=0.003)
+    assert i3ra90.az.degree == approx(0, abs=0.2)
 
     # RA =180 should be grid south
     i3ra180 = SkyCoord(ra=180 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
         I3Dir(),
     )
-    assert_allclose(i3ra180.zen.degree, 90, atol=0.15)
-    assert_allclose(i3ra180.az.degree, 270, atol=0.2)
+    assert i3ra180.zen.degree == approx(90, abs=0.15)
+    assert i3ra180.az.degree == approx(270, abs=0.2)
 
     # RA =270 should be grid west
     i3ra270 = SkyCoord(ra=270 * u.deg, dec=0 * u.deg, frame="icrs", obstime=obs_time).transform_to(
         I3Dir(),
     )
-    assert_allclose(i3ra270.zen.degree, 90, atol=0.01)
-    assert_allclose(i3ra270.az.degree, 180, atol=0.2)
+    assert i3ra270.zen.degree == approx(90, abs=0.01)
+    assert i3ra270.az.degree == approx(180, abs=0.2)
 
     # celestial north pole should be nadir
     i3np = SkyCoord(ra=0 * u.deg, dec=+90 * u.deg, frame="icrs", obstime=obs_time).transform_to(I3Dir())
-    assert_allclose(i3np.zen.degree, 180, atol=0.15)
+    assert i3np.zen.degree == approx(180, abs=0.15)
 
     # celestial south pole should be zenith
     i3sp = SkyCoord(ra=0 * u.deg, dec=-90 * u.deg, frame="icrs", obstime=obs_time).transform_to(I3Dir())
-    assert_allclose(i3sp.zen.degree, 0, atol=0.15)
+    assert i3sp.zen.degree == approx(0, abs=0.15)
 
 
 def test_j2000_to_i3dir_array():
@@ -72,26 +72,26 @@ def test_j2000_to_i3dir_array():
     zen = [90, 90, 90, 90, 180, 0]
 
     i3dir = SkyCoord(ra=ras, dec=dec, frame="icrs", obstime=obs_time).transform_to(I3Dir())
-    assert_allclose(i3dir.az.degree[:4], azi, atol=0.2)
-    assert_allclose(i3dir.zen.degree, zen, atol=0.2)
+    assert i3dir.az.degree[:4] == approx(azi, abs=0.2)
+    assert i3dir.zen.degree == approx(zen, abs=0.2)
 
     i3dir = ICRS(ra=ras, dec=dec).transform_to(I3Dir(obstime=obs_time))
-    assert_allclose(i3dir.az.degree[:4], azi, atol=0.2)
-    assert_allclose(i3dir.zen.degree, zen, atol=0.2)
+    assert i3dir.az.degree[:4] == approx(azi, abs=0.2)
+    assert i3dir.zen.degree == approx(zen, abs=0.2)
 
     obs_time1 = obs_time + range(25) * hour
     i3dir = SkyCoord(ra=0 * deg, dec=0 * deg, obstime=obs_time1).transform_to(I3Dir())
     azimuth = Angle(np.arange(90, 452, 15 + 1 / 24), unit=deg)
     azimuth = azimuth.wrap_at(360 * deg).degree
-    assert_allclose(i3dir.az.degree, azimuth, atol=0.2)
-    assert_allclose(i3dir.zen.degree, 90, atol=0.2)
+    assert i3dir.az.degree == approx(azimuth, abs=0.2)
+    assert i3dir.zen.degree == approx(90, abs=0.2)
 
     obs_time2 = obs_time + range(366) * day
     i3dir = SkyCoord(ra=0 * deg, dec=0 * deg).transform_to(I3Dir(obstime=obs_time2))
     azimuth = Angle(np.linspace(90, 450, 366), unit=deg)
     azimuth = azimuth.wrap_at(360 * deg).degree
-    assert_allclose(i3dir.az.degree, azimuth, atol=0.2)
-    assert_allclose(i3dir.zen.degree, 90, atol=0.2)
+    assert i3dir.az.degree == approx(azimuth, abs=0.2)
+    assert i3dir.zen.degree == approx(90, abs=0.2)
 
 
 def test_i3dir_to_j2000():
@@ -100,78 +100,77 @@ def test_i3dir_to_j2000():
 
     # grid east should be ra=90
     grid_east = I3Dir(zen=90 * u.deg, az=0 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(grid_east.ra.degree, 90, atol=0.2)
-    assert_allclose(grid_east.dec.degree, 0, atol=0.01)
+    assert grid_east.ra.degree == approx(90, abs=0.2)
+    assert grid_east.dec.degree == approx(0, abs=0.01)
 
     # grid north should be Zero Point of Ares
     grid_north = I3Dir(zen=90 * u.deg, az=90 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(grid_north.ra.degree, 0, atol=0.2)
-    assert_allclose(grid_north.dec.degree, 0, atol=0.15)
+    assert grid_north.ra.degree == approx(0, abs=0.2)
+    assert grid_north.dec.degree == approx(0, abs=0.15)
 
     # grid west should be ra=270
     grid_west = I3Dir(zen=90 * u.deg, az=180 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(grid_west.ra.degree, 270, atol=0.2)
-    assert_allclose(grid_west.dec.degree, 0, atol=0.02)
+    assert grid_west.ra.degree == approx(270, abs=0.2)
+    assert grid_west.dec.degree == approx(0, abs=0.02)
 
     # grid south should be ra=180
     grid_south = I3Dir(zen=90 * u.deg, az=270 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(grid_south.ra.degree, 180, atol=0.2)
-    assert_allclose(grid_south.dec.degree, 0, atol=0.15)
+    assert grid_south.ra.degree == approx(180, abs=0.2)
+    assert grid_south.dec.degree == approx(0, abs=0.15)
 
     # zenith should be celestial south pole
     zenith = I3Dir(zen=0 * u.deg, az=0 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(zenith.dec.degree, -90, atol=0.15)
+    assert zenith.dec.degree == approx(-90, abs=0.15)
 
     # nadir should be celestial south pole
     nadir = I3Dir(zen=180 * u.deg, az=0 * u.deg, obstime=obs_time).transform_to(ICRS())
-    assert_allclose(nadir.dec.degree, +90, atol=0.15)
+    assert nadir.dec.degree == approx(+90, abs=0.15)
 
 
 def test_sun():
     """Conversions from the sun to I3Direction."""
     # times when the Equation of time is stationary
-    assert_allclose(get_sun(Time("2020-04-15 12:00")).transform_to(I3Dir()).az.degree, 90, atol=0.02)
-    assert_allclose(get_sun(Time("2020-06-13 12:00")).transform_to(I3Dir()).az.degree, 90, atol=0.05)
-    assert_allclose(get_sun(Time("2020-09-01 12:00")).transform_to(I3Dir()).az.degree, 90, atol=0.04)
-    assert_allclose(get_sun(Time("2020-12-24 12:00")).transform_to(I3Dir()).az.degree, 90, atol=0.05)
+    assert get_sun(Time("2020-04-15 12:00")).transform_to(I3Dir()).az.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-06-13 12:00")).transform_to(I3Dir()).az.degree == approx(90, abs=0.05)
+    assert get_sun(Time("2020-09-01 12:00")).transform_to(I3Dir()).az.degree == approx(90, abs=0.04)
+    assert get_sun(Time("2020-12-24 12:00")).transform_to(I3Dir()).az.degree == approx(90, abs=0.05)
 
     # times when the Equation of time is maximum/minimum
-    assert_allclose(get_sun(Time("2020-02-11 12:14:15")).transform_to(I3Dir()).az.degree, 90, atol=0.02)
-    assert_allclose(get_sun(Time("2020-05-14 11:56:19")).transform_to(I3Dir()).az.degree, 90, atol=0.02)
-    assert_allclose(get_sun(Time("2020-07-26 12:06:36")).transform_to(I3Dir()).az.degree, 90, atol=0.02)
-    assert_allclose(get_sun(Time("2020-11-03 11:43:35")).transform_to(I3Dir()).az.degree, 90, atol=0.02)
+    assert get_sun(Time("2020-02-11 12:14:15")).transform_to(I3Dir()).az.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-05-14 11:56:19")).transform_to(I3Dir()).az.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-07-26 12:06:36")).transform_to(I3Dir()).az.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-11-03 11:43:35")).transform_to(I3Dir()).az.degree == approx(90, abs=0.02)
 
-    assert_allclose(get_sun(Time("2020-03-20 03:50")).transform_to(I3Dir()).zen.degree, 90, atol=0.02)
-    assert_allclose(
-        get_sun(Time("2020-06-20 21:43")).transform_to(I3Dir()).zen.degree,
-        113.44,
-        1,
-    )
-    assert_allclose(get_sun(Time("2020-09-22 13:31")).transform_to(I3Dir()).zen.degree, 90, atol=0.02)
-    assert_allclose(get_sun(Time("2020-12-21 10:03")).transform_to(I3Dir()).zen.degree, 66.56, atol=0.02)
+    assert get_sun(Time("2020-03-20 03:50")).transform_to(I3Dir()).zen.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-06-20 21:43")).transform_to(I3Dir()).zen.degree == approx(113.44, abs=1)
+    assert get_sun(Time("2020-09-22 13:31")).transform_to(I3Dir()).zen.degree == approx(90, abs=0.02)
+    assert get_sun(Time("2020-12-21 10:03")).transform_to(I3Dir()).zen.degree == approx(66.56, abs=0.02)
 
 
 def test_sun_array():
     """Conversions from the sun to I3Direction with arrays."""
-    ref_time = Time("2020-03-20 0:00")
+    ref_time = Time("2020-01-01 12:00")
     day_offsets = np.arange(366)
     obs_time = ref_time + day_offsets * day
     sun1 = get_sun(obs_time).transform_to(I3Dir())
+    d = 6.240_040_77 + 0.017_201_97 * (365.25 * (ref_time.ymdhms.year - 2000) + day_offsets)
     ref1 = I3Dir(
-        zen=(90 + 23.44 * np.sin(day_offsets / len(day_offsets) * 2 * np.pi)) * deg,
-        az=270 * deg,
+        zen=(90 + 23.44 * np.sin((day_offsets - 80) / len(day_offsets) * 2 * np.pi)) * deg,
+        az=(90 + (-7.659 * np.sin(d) + 9.863 * np.sin(2 * d + 3.5932)) / 4) * u.deg,
     )
-    assert_allclose(sun1.zen.degree, ref1.zen.degree, rtol=0.02)
-    assert_allclose(sun1.az.degree, ref1.az.degree, rtol=0.02)
-    assert_allclose(0, sun1.separation(ref1).degree, atol=4.2)
 
+    assert sun1.zen.degree == approx(ref1.zen.degree, rel=0.02)
+    assert sun1.az.degree == approx(ref1.az.degree, rel=0.02)
+    assert sun1.separation(ref1).degree == approx(0, abs=1)
+
+    ref_time = Time("2020-03-20 00:00")
     day_inc = np.linspace(0, 1, 1441)
     obs_time2 = ref_time + day_inc * day
     sun2 = get_sun(obs_time2).transform_to(I3Dir())
     ref2 = I3Dir(zen=90 * deg, az=(268.2 + day_inc * 360) * deg)
-    assert_allclose(sun2.zen.degree, ref2.zen.degree, rtol=0.004)
-    assert_allclose((sun2.az - ref2.az).wrap_at(180 * deg).degree, 0, atol=0.1)
-    assert_allclose(0, sun2.separation(ref2).degree, atol=0.4)
+    assert sun2.zen.degree == approx(ref2.zen.degree, rel=0.004)
+    assert (sun2.az - ref2.az).wrap_at(180 * deg).degree == approx(0, abs=0.1)
+    assert sun2.separation(ref2).degree == approx(0, abs=0.4)
 
 
 @pytest.mark.skipif("astro" not in globals(), reason="Not in an icetray invironment")
@@ -187,25 +186,25 @@ def test_icetray():
     equa = i3dir.transform_to(ICRS())
     ras, dec = astro.dir_to_equa(zen, azi, obs_time.mjd)
 
-    assert_allclose(equa.ra.radian, ras, atol=1e-3)
-    assert_allclose(equa.dec.radian, dec, atol=1e-5)
+    assert equa.ra.radian == approx(ras, abs=1e-3)
+    assert equa.dec.radian == approx(dec, abs=1e-5)
 
     crab = SkyCoord.from_name("Crab")
     i3crab = crab.transform_to(I3Dir(obstime=obs_time))
     zenith, azimuth = astro.equa_to_dir(crab.ra.radian, crab.dec.radian, obs_time.mjd)
-    assert_allclose(zenith, i3crab.zen.radian, atol=1e-5)
-    assert_allclose(azimuth, i3crab.az.radian, atol=2e-5)
+    assert zenith == approx(i3crab.zen.radian, abs=1e-5)
+    assert azimuth == approx(i3crab.az.radian, abs=2e-5)
 
     i3sun = get_sun(obs_time).transform_to(I3Dir())
     sun_zen, sun_azi = astro.sun_dir(obs_time.mjd)
-    assert_allclose(sun_zen, i3sun.zen.radian, atol=2e-5)
-    assert_allclose(sun_azi, i3sun.az.radian, atol=1e-4)
+    assert sun_zen == approx(i3sun.zen.radian, abs=2e-5)
+    assert sun_azi == approx(i3sun.az.radian, abs=1e-4)
 
-    i3moon = get_moon(obs_time).transform_to(I3Dir())
+    i3moon = get_body("moon", obs_time).transform_to(I3Dir())
     moon_zen, moon_azi = astro.moon_dir(obs_time.mjd)
-    assert_allclose(moon_zen, i3moon.zen.radian, atol=1e-4)
-    assert_allclose(moon_azi, i3moon.az.radian, atol=1e-4)
+    assert moon_zen == approx(i3moon.zen.radian, abs=1e-4)
+    assert moon_azi == approx(i3moon.az.radian, abs=1e-4)
 
 
 if __name__ == "__main__":
-    pytest.main(["-v", __file__, *sys.argv])
+    sys.exit(pytest.main(["-v", __file__, *sys.argv[1:]]))

@@ -12,6 +12,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   Tests:
     runs-on: ${{ matrix.os }}
@@ -34,12 +38,40 @@ jobs:
       - name: Install i3astropy
         run: python3 -m pip install .[test]
       - name: Run Unit Tests
-        run: pytest
+        run: pytest --junit-xml=test-results-${{matrix.os}}-${{matrix.python-version}}.junit.xml
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-${{matrix.os}}-${{matrix.python-version}}.junit.xml
+          path: test-results-${{matrix.os}}-${{matrix.python-version}}.junit.xml
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
           verbose: true
+  publish-test-results:
+    name: "Publish Tests Results"
+    needs: Tests
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
+    if: always()
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          pattern: test-results-*
+          merge-multiple: true
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: "*.xml"
+          deduplicate_classes_by_file_name: true
   Docs:
     runs-on: ubuntu-22.04
     strategy:

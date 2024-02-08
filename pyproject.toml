@@ -34,23 +34,11 @@ requires-python = "~=3.9"
 dev = ["pre-commit"]
 docs = ['mkdocs']
 examples = ["matplotlib"]
-test = ["pytest", "pytest-cov", "pytest-subtests"]
+test = ["pytest", "pytest-cov"]
 
 [project.urls]
 Collaboration = "https://icecube.wisc.edu"
 Source = "https://github.com/icecube/i3astropy"
-
-[tool.black]
-line-length = 108
-target-version = ['py39']
-
-[tool.isort]
-ensure_newline_before_comments = true
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 108
-multi_line_output = 3
-use_parentheses = true
 
 [tool.mypy]
 allow_subclassing_any = true
@@ -90,7 +78,9 @@ ignore = [
   "S101",  # assert-used
   "D213",  # multi-line-summary-second-line incompatible with multi-line-summary-first-line
   "D203",  # one-blank-line-before-class" incompatible with no-blank-line-before-class
-  "RUF012"  # mutable-class-default
+  "RUF012",  # mutable-class-default
+  "COM812",  # confilcts with formatter
+  "ISC001"  # confilcts with formatter
 ]
 select = ["ALL"]
 
