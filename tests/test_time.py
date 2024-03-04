@@ -104,8 +104,8 @@ def test_times_array():
         Time(2020.5, 0, format="i3time")
 
 
-@pytest.mark.skipif("I3Time" not in globals(), reason="Not in an icetray invironment")
 @pytest.mark.parametrize(("daq_year", "daq_time", "iso"), times)
+@pytest.mark.skipif("I3Time" not in globals(), reason="Not in an icetray invironment")
 def test_icetray(daq_year, daq_time, iso):
     """Test i3astropy.I3Time matches dataclasses.I3Time."""
     di3t = I3Time(daq_year, daq_time)

@@ -10,6 +10,7 @@ It is obvious that the sun should be at Grid South at midnight,
 Grid East at 6:00, Grid North at noon, and Grid West at 18:00
 the example makes a plot to verify that coordinates are defined correctly.
 """
+
 from pathlib import Path
 
 import matplotlib.dates as mdates
