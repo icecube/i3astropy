@@ -79,8 +79,8 @@ ignore = [
   "D213",  # multi-line-summary-second-line incompatible with multi-line-summary-first-line
   "D203",  # one-blank-line-before-class" incompatible with no-blank-line-before-class
   "RUF012",  # mutable-class-default
-  "COM812",  # confilcts with formatter
-  "ISC001"  # confilcts with formatter
+  "COM812",  # conflicts with formatter
+  "ISC001"  # conflicts with formatter
 ]
 select = ["ALL"]
 

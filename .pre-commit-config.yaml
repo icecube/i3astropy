@@ -17,32 +17,32 @@ repos:
       - id: pretty-format-toml
         args: [--autofix]
   - repo: https://github.com/fsfe/reuse-tool
-    rev: v3.0.1
+    rev: v3.1.0a1
     hooks:
       - id: reuse
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.9.0
+    rev: v1.10.1
     hooks:
       - id: mypy
         additional_dependencies: [numpy]
         files: src/i3astropy
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.3.5
+    rev: v0.5.0
     hooks:
       - id: ruff
         args: [--fix, --show-fixes]
       - id: ruff-format
   - repo: https://github.com/pycqa/pylint
-    rev: v3.1.0
+    rev: v3.2.4
     hooks:
       - id: pylint
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.3.0
     hooks:
       - id: codespell
         args: [-L, livetime]
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: "1.16.0"
+    rev: "1.18.0"
     hooks:
       - id: blacken-docs
   - repo: https://github.com/pre-commit/pygrep-hooks
@@ -58,7 +58,7 @@ repos:
       - id: forbid-crlf
       - id: forbid-tabs
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
