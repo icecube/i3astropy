@@ -54,7 +54,7 @@ warn_unreachable = true
 max-line-length = "108"
 
 [tool.pylint.messages_control]
-disable = ["W0201", "R0903", "E0401", "C0411"]
+disable = ["W0201", "R0903", "E0401", "C0411", "R0917"]
 
 [tool.pytest.ini_options]
 addopts = ["--cov=i3astropy", "--doctest-glob=README.md", "-ra", "--strict-config", "--strict-markers"]
