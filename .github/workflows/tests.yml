@@ -22,11 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
-        os: [ubuntu-22.04]
-        include:
-          - python-version: 3.12
-            os: macos-12
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
@@ -63,7 +60,7 @@ jobs:
       - name: Install i3astropy
         run: python3 -m pip install .[test]
       - name: Run Unit Tests
-        run: pytest --junit-xml=test-results-icetray.junit.xml
+        run: python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
@@ -100,7 +97,7 @@ jobs:
           files: "*.xml"
           deduplicate_classes_by_file_name: true
   Docs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
@@ -108,7 +105,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
           cache: pip
           cache-dependency-path: pyproject.toml
       - name: Install i3astropy
