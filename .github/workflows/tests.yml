@@ -60,21 +60,18 @@ jobs:
       - name: Install i3astropy
         run: python3 -m pip install 'astropy>=6' .[test]
       - name: Run Unit Tests
-        run: python -m pytest --junit-xml=test-results-icetray.junit.xml
+        run: |
+          echo PYTHONPATH = $PYTHONPATH
+          echo I3_BUILD = $I3_BUILD
+          python -c 'from icecube import astro; print(astro.__file__)'
+          python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           if-no-files-found: error
           name: test-results-icetray.junit.xml
-          path: test-results-icetray.junit.xml
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v5
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          fail_ci_if_error: false
-          verbose: true
+          path: test-results-icetray.junit.xmls
   publish-test-results:
     name: "Publish Tests Results"
     needs: [Tests, TestsIceTray]
