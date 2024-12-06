@@ -34,7 +34,7 @@ requires-python = "~=3.9"
 dev = ["pre-commit"]
 docs = ['mkdocs']
 examples = ["matplotlib"]
-test = ["pytest>=7", "pytest-cov"]
+test = ["pytest>=7", "pytest-cov>=6"]
 
 [project.urls]
 Collaboration = "https://icecube.wisc.edu"
