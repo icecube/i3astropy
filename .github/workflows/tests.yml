@@ -60,18 +60,14 @@ jobs:
       - name: Install i3astropy
         run: python3 -m pip install 'astropy>=6' .[test]
       - name: Run Unit Tests
-        run: |
-          /usr/local/icetray/env-shell.sh echo PYTHONPATH = '$PYTHONPATH'
-          /usr/local/icetray/env-shell.sh echo I3_BUILD = '$I3_BUILD'
-          /usr/local/icetray/env-shell.sh python -c 'from icecube import astro; print(astro.__file__)'
-          /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
+        run: /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           if-no-files-found: error
           name: test-results-icetray.junit.xml
-          path: test-results-icetray.junit.xmls
+          path: test-results-icetray.junit.xml
   publish-test-results:
     name: "Publish Tests Results"
     needs: [Tests, TestsIceTray]
