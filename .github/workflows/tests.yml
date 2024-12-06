@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install i3astropy
-        run: python3 -m pip install .[test] astropy>=6
+        run: python3 -m pip install 'astropy>=6' .[test]
       - name: Run Unit Tests
         run: python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results

@@ -22,7 +22,7 @@ classifiers = [
   'Topic :: Scientific/Engineering :: Astronomy',
   'Topic :: Scientific/Engineering :: Physics'
 ]
-dependencies = ["numpy", "astropy"]
+dependencies = ["numpy", "astropy>=5"]
 dynamic = ["version", "description"]
 keywords = ["python", "science", "astronomy", "astrophysics", "astropy", "IceCube", "neutrino"]
 license = {file = "LICENSES/BSD-2-Clause.txt"}
