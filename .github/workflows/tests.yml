@@ -53,9 +53,34 @@ jobs:
         with:
           fail_ci_if_error: false
           verbose: true
+  TestsIceTray:
+    runs-on: ubuntu-latest
+    container: icecube/icetray:icetray-prod-v1.11.1-ubuntu22.04-X64
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install i3astropy
+        run: python3 -m pip install .[test]
+      - name: Run Unit Tests
+        run: pytest --junit-xml=test-results-icetray.junit.xml
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-icetray.junit.xml
+          path: test-results-icetray.junit.xml
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v5
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          fail_ci_if_error: false
+          verbose: true
   publish-test-results:
     name: "Publish Tests Results"
-    needs: Tests
+    needs: [Tests, TestsIceTray]
     runs-on: ubuntu-latest
     permissions:
       checks: write
