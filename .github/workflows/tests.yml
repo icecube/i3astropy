@@ -61,10 +61,10 @@ jobs:
         run: python3 -m pip install 'astropy>=6' .[test]
       - name: Run Unit Tests
         run: |
-          echo PYTHONPATH = $PYTHONPATH
-          echo I3_BUILD = $I3_BUILD
-          python -c 'from icecube import astro; print(astro.__file__)'
-          python -m pytest --junit-xml=test-results-icetray.junit.xml
+          /usr/local/icetray/env-shell.sh echo PYTHONPATH = '$PYTHONPATH'
+          /usr/local/icetray/env-shell.sh echo I3_BUILD = '$I3_BUILD'
+          /usr/local/icetray/env-shell.sh python -c 'from icecube import astro; print(astro.__file__)'
+          /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
