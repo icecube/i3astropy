@@ -4,7 +4,7 @@
 
 """Astropy support for the IceCube Coordinate System."""
 
-__all__ = ["I3Time", "I3Dir", "I3DirToAltAz", "AltAzToI3Dir", "i3location"]
+__all__ = ["AltAzToI3Dir", "I3Dir", "I3DirToAltAz", "I3Time", "i3location"]
 __version__ = "0.1"
 
 from typing import Any
@@ -42,7 +42,7 @@ class I3Time(TimeFormat):
 
     name = "i3time"  # Unique format name
     _default_scale = "utc"
-    _DAQ_TICKS_IN_DAY = int(864e12)
+    _DAQ_TICKS_IN_DAY = 864_000_000_000_000
     _default_precision = 9
 
     def set_jds(self: "I3Time", val1: NDArray[np.float64], val2: NDArray[np.float64]) -> None:
