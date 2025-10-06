@@ -7,6 +7,7 @@
 """Tests related to I3Time in i3astropy."""
 
 import contextlib
+import re
 import sys
 
 import numpy as np
@@ -100,7 +101,7 @@ def test_times_array():
 
     with pytest.raises(ScaleValueError):
         Time(2020, 0, format="i3time", scale="tt")
-    with pytest.raises(ValueError, match="2020.5"):
+    with pytest.raises(ValueError, match=re.escape("2020.5")):
         Time(2020.5, 0, format="i3time")
 
 
