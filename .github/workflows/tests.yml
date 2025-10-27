@@ -37,7 +37,7 @@ jobs:
       - name: Run Unit Tests
         run: pytest --junit-xml=test-results-${{matrix.os}}-${{matrix.python-version}}.junit.xml
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           if-no-files-found: error
@@ -62,7 +62,7 @@ jobs:
       - name: Run Unit Tests
         run: /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           if-no-files-found: error
@@ -79,7 +79,7 @@ jobs:
     if: always()
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: .
           pattern: test-results-*
