@@ -74,9 +74,9 @@ for n, d in enumerate(T[:-1]):
         slope = -(sun[n + 1].az.degree - sun[n - 1].az.degree) / (
             sun[n + 1].zen.degree - sun[n - 1].zen.degree
         )
-        SIZE = 1
-        x1 = -SIZE / (1 + slope**2) ** 0.5
-        x2 = +SIZE / (1 + slope**2) ** 0.5
+        size = 1
+        x1 = -size / (1 + slope**2) ** 0.5
+        x2 = +size / (1 + slope**2) ** 0.5
 
         ax1.plot(
             [sun[n].az.degree + x1, sun[n].az.degree + x2],
@@ -90,13 +90,13 @@ for n, d in enumerate(T[:-1]):
         if sun[n].az.degree < 90:
             HALIGN = "left"
             text_az = sun[n].az.degree - 1
-            x = -1.5 * SIZE / (1 + slope**2) ** 0.5
+            x = -1.5 * size / (1 + slope**2) ** 0.5
             txt_az = sun[n].az.degree + x
             txt_zen = sun[n].zen.degree + slope * x
         else:
             HALIGN = "right"
             text_az = sun[n].az.degree + 1
-            x = 1.5 * SIZE / (1 + slope**2) ** 0.5
+            x = 1.5 * size / (1 + slope**2) ** 0.5
             txt_az = sun[n].az.degree + x
             txt_zen = sun[n].zen.degree + slope * x
         ax1.text(
