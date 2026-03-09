@@ -74,19 +74,17 @@ target-version = "py39"
 fixable = ["I"]
 ignore = [
   "ANN401",  # any-type
-  "INP001",  # flake8-no-pep420
   "S101",  # assert-used
   "D213",  # multi-line-summary-second-line incompatible with multi-line-summary-first-line
   "D203",  # one-blank-line-before-class" incompatible with no-blank-line-before-class
-  "RUF012",  # mutable-class-default
-  "COM812",  # conflicts with formatter
-  "ISC001"  # conflicts with formatter
+  "COM812"  # conflicts with formatter
 ]
 select = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
 "examples/*" = [
   "ANN",  # flake8-annotations
+  "INP001",  # flake8-no-pep420
   "PLR",  # max-statements
   "ARG",  # flake8-unused-arguments
   "T201"  # flake8-print

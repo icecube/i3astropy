@@ -64,13 +64,23 @@ colors = cmap(norm(10 ** (f["logE"][cut])))
 # plot our events based using coordinate transform from zenith-azimuth with a plut sign
 icrs2 = SkyCoord(i3dir[cut], frame="i3dir").transform_to("icrs")
 ax.scatter(
-    icrs2.ra.deg, icrs2.dec.deg, transform=ax.get_transform("icrs"), s=100, facecolor=colors, marker="+"
+    icrs2.ra.deg,
+    icrs2.dec.deg,
+    transform=ax.get_transform("icrs"),
+    s=100,
+    facecolor=colors,
+    marker="+",
 )
 
 # plot our events based on the RA-Dec in the file with a cross overlaying the plus signs we just made
 icrs = icrs[cut]
 ax.scatter(
-    icrs.ra.deg, icrs.dec.deg, transform=ax.get_transform("icrs"), s=100, facecolor=colors, marker="x"
+    icrs.ra.deg,
+    icrs.dec.deg,
+    transform=ax.get_transform("icrs"),
+    s=100,
+    facecolor=colors,
+    marker="x",
 )
 
 # Plot a Circle around each event with radius of its angErr

@@ -7,18 +7,18 @@
 __all__ = ["AltAzToI3Dir", "I3Dir", "I3DirToAltAz", "I3Time", "i3location"]
 __version__ = "0.1"
 
-from typing import Any
+from typing import Any, ClassVar
 
 import erfa
 import numpy as np
-from astropy.coordinates import AltAz, EarthLocation
+from astropy.coordinates import AltAz, EarthLocation, Longitude
 from astropy.coordinates.attributes import TimeAttribute
 from astropy.coordinates.baseframe import BaseCoordinateFrame, RepresentationMapping, frame_transform_graph
 from astropy.coordinates.representation import PhysicsSphericalDifferential, PhysicsSphericalRepresentation
 from astropy.coordinates.transformations import CoordinateTransform
-from astropy.time import TimeFormat
+from astropy.time import Time, TimeFormat
 from astropy.time.core import ScaleValueError
-from astropy.units import deg, m
+from astropy.units import cycle, deg, hourangle, m
 from numpy.typing import NDArray
 
 # This is the nominal location of the center of the IceCube detector
@@ -98,7 +98,7 @@ class I3Dir(BaseCoordinateFrame):
     such that the +y direction is at azimuth=90°.
     """
 
-    frame_specific_representation_info = {
+    frame_specific_representation_info: ClassVar = {
         PhysicsSphericalRepresentation: [
             RepresentationMapping("theta", "zen"),
             RepresentationMapping("phi", "az"),
@@ -150,3 +150,69 @@ class AltAzToI3Dir(CoordinateTransform):
 
 frame_transform_graph.add_transform(I3Dir, AltAz, I3DirToAltAz())
 frame_transform_graph.add_transform(AltAz, I3Dir, AltAzToI3Dir())
+
+
+def gmt(time: Time) -> Longitude:
+    """Calculate the Greenwich mean solar time (GMT).
+
+    Useful for cosmic ray anisotropy studies.
+
+    Args:
+        time (astropy.time.Time): Observation time
+
+    Returns:
+        astropy.coordinates.Longitude: Greenwich mean solar time (GMT)
+
+    """
+    return Longitude(time.mjd, unit=cycle).to(hourangle)
+
+
+def gmst(time: Time) -> Longitude:
+    """Calculate the Greenwich mean sidereal time (GMST).
+
+    Useful for for cosmic ray anisotropy studies.
+
+    Args:
+        time (astropy.time.Time): Observation time
+
+    Returns:
+        astropy.coordinates.Longitude: Greenwich mean sidereal time (GMST)
+
+    """
+    return time.sidereal_time("mean", "greenwich")
+
+
+def gmast(time: Time) -> Longitude:
+    """Calculate Greenwich mean anti-sidereal time (GMAST).
+
+    Anti-sidereal time is defined by a year with one less day in a year than solar time,
+    that is 364.2425 days in a year. Useful for cosmic ray anisotropy studies.
+    See Munakata, K. et al., Proc. 27th ICRC, p.3919 (2001).
+    https://ui.adsabs.harvard.edu/abs/2001ICRC...10.3919M
+
+    Args:
+        time (astropy.time.Time): Observation time
+
+    Returns:
+        astropy.coordinates.Longitude: Greenwich mean anti-sidereal time (GMST)
+
+    """
+    return Longitude(2 * time.mjd - gmst(time).cycle, unit=cycle).to(hourangle)
+
+
+def gmest(time: Time) -> Longitude:
+    """Calculate Greenwich mean anti-sidereal time (GMAST).
+
+    Anti-sidereal time is defined by a year with one less day in a year than solar time,
+    that is 364.2425 days in a year. This is used for cosmic ray anisotropy studies.
+    See Munakata, K. et al., Proc. 27th ICRC, p.3919 (2001).
+    https://ui.adsabs.harvard.edu/abs/2001ICRC...10.3919M
+
+    Args:
+        time (astropy.time.Time): Observation time
+
+    Returns:
+        astropy.coordinates.Longitude: Greenwich mean anti-sidereal time (GMST)
+
+    """
+    return Longitude(2 * gmst(time).cycle - time.mjd, unit=cycle).to(hourangle)

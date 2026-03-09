@@ -111,3 +111,8 @@ Max diff zenith        : 0.000173°
 Max diff azimuth       : 0.000716°
 Max diff I3 separation : 0.000174°
 ```
+[plot_sidereal.py](./examples/plot_sidereal.py) Plots the sidereal functions for three months: August, September, and October.
+The functions almost overlap during September, and you can see the phase shift in the other months. In the bottom right the
+fast foruier transform is plotted, showing sharp spikes in the period of each function in days.
+
+![Sidereal](./examples/plot_sun_azimuth.svg)

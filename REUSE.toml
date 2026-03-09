@@ -1,0 +1,10 @@
+SPDX-PackageDownloadLocation = "https://github.com/icecube/i3astropy"
+SPDX-PackageName = "i3astropy"
+SPDX-PackageSupplier = "The IceCube Collaboration <https://icecube.wisc.edu>"
+version = 1
+
+[[annotations]]
+SPDX-FileCopyrightText = "© 2022-2026 the IceCube i3astropy contributors (https://github.com/icecube/i3astropy/graphs/contributors)"
+SPDX-License-Identifier = "BSD-2-Clause"
+path = "examples/**.svg"
+precedence = "aggregate"
