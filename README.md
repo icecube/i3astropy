@@ -115,4 +115,4 @@ Max diff I3 separation : 0.000174°
 The functions almost overlap during September, and you can see the phase shift in the other months. In the bottom right the
 fast foruier transform is plotted, showing sharp spikes in the period of each function in days.
 
-![Sidereal](./examples/plot_sun_azimuth.svg)
+![Sidereal](./examples/plot_sidereal.svg)
