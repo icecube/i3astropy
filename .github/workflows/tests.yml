@@ -28,8 +28,6 @@ jobs:
           - python-version: "3.14"
             os: macos-15-intel
           - python-version: "3.14"
-            os: macos-14
-          - python-version: "3.14"
             os: macos-15
           - python-version: "3.14"
             os: macos-26
@@ -67,7 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Install i3astropy
-        run: python3 -m pip install 'astropy>=6' .[test]
+        run: python3 -m pip install 'astropy>=6' 'pytest<8' .[test]
       - name: Run Unit Tests
         run: /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
@@ -107,7 +105,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: "3.14"
           cache: pip
           cache-dependency-path: pyproject.toml
       - name: Install i3astropy
