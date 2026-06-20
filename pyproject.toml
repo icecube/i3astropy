@@ -4,7 +4,7 @@
 
 [build-system]
 build-backend = "flit_core.buildapi"
-requires = ["flit_core >=2,<4"]
+requires = ["flit_core >=3,<4"]
 
 [project]
 authors = [{name = "Kevin Meagher"}]
@@ -24,7 +24,7 @@ classifiers = [
   'Topic :: Scientific/Engineering :: Astronomy',
   'Topic :: Scientific/Engineering :: Physics'
 ]
-dependencies = ["numpy", "astropy>=5"]
+dependencies = ["numpy", "astropy>=6"]
 dynamic = ["version", "description"]
 keywords = ["python", "science", "astronomy", "astrophysics", "astropy", "IceCube", "neutrino"]
 license = {file = "LICENSES/BSD-2-Clause.txt"}
