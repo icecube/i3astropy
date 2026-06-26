@@ -40,7 +40,7 @@ jobs:
           cache: pip
           cache-dependency-path: pyproject.toml
       - name: Install i3astropy
-        run: python3 -m pip install .[test]
+        run: python3 -m pip install astropy-iers-data .[test]
       - name: Run Unit Tests
         run: pytest --junit-xml=test-results-${{matrix.os}}-${{matrix.python-version}}.junit.xml
       - name: Upload Test Results
@@ -65,7 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install i3astropy
-        run: python3 -m pip install 'astropy>=6' 'pytest<8' .[test]
+        run: python3 -m pip install astropy-iers-data 'astropy>=6' 'pytest<8' .[test]
       - name: Run Unit Tests
         run: /usr/local/icetray/env-shell.sh python -m pytest --junit-xml=test-results-icetray.junit.xml
       - name: Upload Test Results
