@@ -22,15 +22,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
-        os: [ubuntu-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
+        os: [xcode-27]
         include:
-          - python-version: "3.14"
-            os: macos-15-intel
-          - python-version: "3.14"
-            os: macos-15
-          - python-version: "3.14"
-            os: macos-26
+          - python-version: "3.15"
+            os: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python-version }}

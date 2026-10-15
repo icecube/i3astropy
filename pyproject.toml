@@ -7,7 +7,7 @@ build-backend = "flit_core.buildapi"
 requires = ["flit_core >=3,<4"]
 
 [project]
-authors = [{name = "Kevin Meagher"}]
+authors = [{ name = "Kevin Meagher" }]
 classifiers = [
   'Development Status :: 4 - Beta',
   'Intended Audience :: Science/Research',
@@ -27,7 +27,7 @@ classifiers = [
 dependencies = ["numpy", "astropy>=6"]
 dynamic = ["version", "description"]
 keywords = ["python", "science", "astronomy", "astrophysics", "astropy", "IceCube", "neutrino"]
-license = {file = "LICENSES/BSD-2-Clause.txt"}
+license = { file = "LICENSES/BSD-2-Clause.txt" }
 name = "i3astropy"
 readme = "README.md"
 requires-python = "~=3.9"
@@ -76,6 +76,7 @@ target-version = "py39"
 fixable = ["I"]
 ignore = [
   "ANN401",  # any-type
+  "CPY001",  # Missing copyright notice at top of file
   "S101",  # assert-used
   "D213",  # multi-line-summary-second-line incompatible with multi-line-summary-first-line
   "D203",  # one-blank-line-before-class" incompatible with no-blank-line-before-class
